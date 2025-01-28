@@ -17,3 +17,5 @@ This project requires PHP version 8 or higher and the `vlucas/phpdotenv` package
     ]
   }
 }
+```
+composer require vlucas/phpdotenv
