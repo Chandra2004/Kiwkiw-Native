@@ -1,4 +1,55 @@
 <?php
+function handleNamespaceUpdate($newNamespace)
+{
+    // Cari dan ganti namespace lama ({{NAMESPACE}}) di semua file PHP
+    $directory = new RecursiveDirectoryIterator(__DIR__ . '/app');
+    $iterator = new RecursiveIteratorIterator($directory);
+
+    foreach ($iterator as $file) {
+        if ($file->getExtension() === 'php') {
+            $content = file_get_contents($file->getPathname());
+            $updatedContent = str_replace('{{NAMESPACE}}', $newNamespace, $content);
+            file_put_contents($file->getPathname(), $updatedContent);
+        }
+    }
+
+    echo "Namespace berhasil diperbarui di semua file PHP.\n";
+
+    // Cek dan ganti namespace di public/index.php
+    $indexFile = __DIR__ . '/public/index.php';
+    if (file_exists($indexFile)) {
+        $content = file_get_contents($indexFile);
+        $updatedContent = str_replace('{{NAMESPACE}}', $newNamespace, $content);
+        file_put_contents($indexFile, $updatedContent);
+        echo "Namespace di public/index.php berhasil diperbarui.\n";
+    }
+}
+
+if (php_sapi_name() === 'cli') {
+    // Jika dijalankan di CLI, minta konfirmasi di terminal
+    echo "Apakah Anda yakin ingin mengganti NAMESPACE? (y/n): ";
+    $confirm = trim(fgets(STDIN));
+
+    if (strtolower($confirm) === 'y') {
+        // Baca composer.json untuk mendapatkan namespace baru
+        $composer = json_decode(file_get_contents(__DIR__ . '/composer.json'), true);
+        if (!isset($composer['autoload']['psr-4'])) {
+            die("PSR-4 autoload tidak ditemukan di composer.json\n");
+        }
+
+        // Ambil namespace baru
+        $newNamespace = array_keys($composer['autoload']['psr-4'])[0];
+        $newNamespace = rtrim($newNamespace, '\\'); // Hilangkan backslash di akhir
+
+        echo "Namespace baru: $newNamespace\n";
+
+        // Lakukan pembaruan namespace
+        handleNamespaceUpdate($newNamespace);
+    } else {
+        echo "Proses pembaruan namespace dibatalkan.\n";
+    }
+} else {
+    // Jika dijalankan di browser, tampilkan form konfirmasi
     if (isset($_POST['confirm']) && $_POST['confirm'] === 'yes') {
         // Baca composer.json untuk mendapatkan namespace baru
         $composer = json_decode(file_get_contents(__DIR__ . '/composer.json'), true);
@@ -12,28 +63,8 @@
 
         echo "Namespace baru: $newNamespace\n";
 
-        // Cari dan ganti namespace lama ({{NAMESPACE}}) di semua file PHP
-        $directory = new RecursiveDirectoryIterator(__DIR__ . '/app');
-        $iterator = new RecursiveIteratorIterator($directory);
-
-        foreach ($iterator as $file) {
-            if ($file->getExtension() === 'php') {
-                $content = file_get_contents($file->getPathname());
-                $updatedContent = str_replace('{{NAMESPACE}}', $newNamespace, $content);
-                file_put_contents($file->getPathname(), $updatedContent);
-            }
-        }
-
-        echo "Namespace berhasil diperbarui.\n";
-
-        // Cek dan ganti namespace di public/index.php
-        $indexFile = __DIR__ . '/public/index.php';
-        if (file_exists($indexFile)) {
-            $content = file_get_contents($indexFile);
-            $updatedContent = str_replace('{{NAMESPACE}}', $newNamespace, $content);
-            file_put_contents($indexFile, $updatedContent);
-            echo "Namespace di public/index.php berhasil diperbarui.\n";
-        }
+        // Lakukan pembaruan namespace
+        handleNamespaceUpdate($newNamespace);
     } else {
         // Menampilkan tombol konfirmasi untuk mengganti namespace
         echo '
@@ -60,5 +91,5 @@
         </body>
         </html>';
     }
+}
 ?>
-

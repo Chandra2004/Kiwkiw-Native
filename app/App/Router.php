@@ -1,8 +1,10 @@
 <?php
 
     namespace {{NAMESPACE}}\app;
+    
+    use {{NAMESPACE}}\App\Config;
 
-    require_once __DIR__ . '/Config.php';
+    // require_once __DIR__ . '/Config.php';
 
     class Router {
         private static array $routes = [];
@@ -18,11 +20,15 @@
         }
 
         public static function run() {
+
+            Config::loadEnv(); // Muat file .env
+
             $path = "/";
             if (isset($_SERVER['PATH_INFO'])) {
                 $path = $_SERVER['PATH_INFO'];
             }
-            $method = $_SERVER['REQUEST_METHOD'];
+            // $method = $_SERVER['REQUEST_METHOD'];
+            $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
             foreach (self::$routes as $route) {
                 $pattern = "#^" . $route['path'] . "$#";
@@ -45,8 +51,8 @@
             }
 
             http_response_code(404);
-            header('Location: ' . BASE_URL . '/404');
+            header('Location: ' . Config::get('BASE_URL') . '/404');
+            // header('Location: ' . BASE_URL . '/404');
             exit();
         }
     }
-?>

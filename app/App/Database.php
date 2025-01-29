@@ -1,5 +1,4 @@
 <?php
-
     namespace {{NAMESPACE}}\app;
 
     require_once __DIR__ . '/Config.php';
@@ -19,38 +18,18 @@
             $user = Config::get('DB_USER');
             $pass = Config::get('DB_PASS');
 
-            $dsn = "mysql:host=$host;dbname=$dbname";
+            $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4"; // Tambahkan charset
 
             try {
                 $this->dbh = new PDO($dsn, $user, $pass, [
                     PDO::ATTR_PERSISTENT => true,
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ]);
+                echo "Database connection successful.\n"; // Perbaiki format output
             } catch (PDOException $e) {
-                die($e->getMessage());
+                die("Database connection failed: " . $e->getMessage()); // Pastikan die() digunakan sebelum echo
             }
         }
-        // private $host = DB_HOST;
-        // private $user = DB_USER;
-        // private $pass = DB_PASS;
-        // private $dbname = DB_NAME;
-
-        // private $dbh;
-        // private $stmt;
-
-        // public function __construct() {
-        //     $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-        //     $options = [
-        //         PDO::ATTR_PERSISTENT => true,
-        //         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        //     ];
-
-        //     try {
-        //         $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-        //     } catch (PDOException $e) {
-        //         die($e->getMessage());
-        //     }
-        // }
 
         public function query($sql) {
             $this->stmt = $this->dbh->prepare($sql);
@@ -81,16 +60,29 @@
 
         public function resultSet() {
             $this->execute();
-            return $this->stmt->fetchAll(PDO::FETCH_ASSOC); // Mengubah menjadi array asosiatif
+            return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function single() {
             $this->execute();
-            return $this->stmt->fetch(PDO::FETCH_ASSOC); // Mengubah menjadi array asosiatif
+            return $this->stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         public function rowCount() {
             return $this->stmt->rowCount();
+        }
+
+        // Tambahkan metode transaksi
+        public function beginTransaction() {
+            return $this->dbh->beginTransaction();
+        }
+
+        public function commit() {
+            return $this->dbh->commit();
+        }
+
+        public function rollBack() {
+            return $this->dbh->rollBack();
         }
     }
 ?>
