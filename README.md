@@ -19,7 +19,7 @@
   composer init
 ```
 
-> **Catatan**: Jangan letakkan file di `src/`, tetapi ubah ke `app/`
+📌 **Catatan**: Pastikan untuk tidak meletakkan file di `src/`, tetapi ubah ke `app/`.
 
 ### 3️⃣ Konfigurasi Token GitHub (Opsional, jika menggunakan repositori privat)
 
@@ -47,13 +47,11 @@ Jalankan update namespace agar autoload berjalan:
   php update-namespace.php
 ```
 
-lalu tekan : y
-
 Atau akses melalui browser: `http://localhost/kiwkiw/update-namespace.php`
 
-### 6️⃣ Konfigurasi Tambahan di `composer.json`
+### 6️⃣ Konfigurasi `composer.json`
 
-Tambahkan konfigurasi berikut di dalam file `composer.json`:
+Tambahkan pengaturan berikut ke dalam file `composer.json`:
 
 ```json
 {
@@ -160,6 +158,16 @@ Buat file seeder baru di `database/seeders/` (contoh: `UserSeeder.php`).
 
 ---
 
+## 🌍 Konfigurasi **BASE\_URL** di `.env`
+
+Tambahkan BASE\_URL di file `.env` sesuai dengan file path dari `public/`:
+
+```env
+BASE_URL=http://localhost/Kiwkiw-Native/public
+```
+
+---
+
 ## ✨ Kontribusi
 
 Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
@@ -171,5 +179,5 @@ Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
 
 ---
 
-Terima kasih telah menggunakan **Template MVC saya**! 🚀
+Terima kasih telah menggunakan **Kiwkiw**! 🚀
 
