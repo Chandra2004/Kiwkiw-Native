@@ -3,14 +3,25 @@
 namespace {{NAMESPACE}}\Controller;
 
 use {{NAMESPACE}}\App\Config;
+use {{NAMESPACE}}\App\Database;
 use {{NAMESPACE}}\App\View;
+use Exception; // Ensure to include Exception
 
 class HomeController
 {
     function index() {
         Config::loadEnv(); // Muat file .env
+        
+        try {
+            $db = new Database();
+            $status = "success";
+        } catch (Exception $e) {
+            $status = $e->getMessage();
+        }
+
         $model = [
-            // 'title' => 'Judul Halaman'
+            'title' => 'MVC Chandra',
+            'status' => $status,
             'base_url' => Config::get('BASE_URL')
         ];
 

@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMESPACE}}\app;
+    namespace {{NAMESPACE}}\App;
 
     require_once __DIR__ . '/Config.php';
 
@@ -11,23 +11,24 @@
         private $stmt;
 
         public function __construct() {
-            Config::loadEnv(); // Muat file .env
+            Config::loadEnv(); // Load environment variables from .env
 
             $host = Config::get('DB_HOST');
             $dbname = Config::get('DB_NAME');
             $user = Config::get('DB_USER');
             $pass = Config::get('DB_PASS');
 
-            $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4"; // Tambahkan charset
+            $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4"; // Adding charset for better compatibility
 
             try {
                 $this->dbh = new PDO($dsn, $user, $pass, [
                     PDO::ATTR_PERSISTENT => true,
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ]);
-                echo "Database connection successful.\n"; // Perbaiki format output
+                // Database connection is handled in controller for status updates
             } catch (PDOException $e) {
-                die("Database connection failed: " . $e->getMessage()); // Pastikan die() digunakan sebelum echo
+                // Instead of die(), we throw an exception to handle the error in the controller
+                throw new PDOException("Database connection failed: " . $e->getMessage());
             }
         }
 
@@ -72,7 +73,7 @@
             return $this->stmt->rowCount();
         }
 
-        // Tambahkan metode transaksi
+        // Transaction methods
         public function beginTransaction() {
             return $this->dbh->beginTransaction();
         }
