@@ -10,7 +10,7 @@
 
 ```sh
   git clone https://github.com/Chandra2004/Kiwkiw-Native.git
-  cd kiwkiw
+  cd Kiwkiw-Native
 ```
 
 ### 2️⃣ Inisialisasi Composer
