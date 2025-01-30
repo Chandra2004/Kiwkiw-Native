@@ -39,17 +39,7 @@
   composer require fakerphp/faker    # Untuk seeder
 ```
 
-### 5️⃣ Update Namespace Setelah Instalasi
-
-Jalankan update namespace agar autoload berjalan:
-
-```sh
-  php update-namespace.php
-```
-
-Atau akses melalui browser: `http://localhost/kiwkiw/update-namespace.php`
-
-### 6️⃣ Konfigurasi `composer.json`
+### 5️⃣  Konfigurasi `composer.json`
 
 Tambahkan pengaturan berikut ke dalam file `composer.json`:
 
@@ -76,6 +66,17 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
       ]
     }
 }
+
+### 6️⃣  Update Namespace Setelah Instalasi
+
+Jalankan update namespace agar autoload berjalan:
+
+```sh
+  php update-namespace.php
+```
+
+Atau akses melalui browser: `http://localhost/kiwkiw/update-namespace.php`
+
 ```
 
 ---
