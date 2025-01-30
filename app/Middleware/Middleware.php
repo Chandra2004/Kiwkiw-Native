@@ -1,10 +1,9 @@
 <?php
+    namespace {{NAMESPACE}}\Middleware;
 
-namespace {{NAMESPACE}}\Middleware;
+    use {{NAMESPACE}}\App\Config;
 
-require_once __DIR__ . '/../App/Config.php';
-
-interface Middleware
-{
-    function before();
-}
+    interface Middleware {
+        function before();
+    }
+?>

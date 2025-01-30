@@ -13,10 +13,12 @@
     Config::loadEnv(); // Muat file .env
     
     Router::add('GET', '/', HomeController::class, 'index');
-    Router::add('GET', '/404', HomeController::class, 'error404');
+    Router::add('GET', '/user', HomeController::class, 'user');
+    Router::add('GET', '/user/information/{id}', HomeController::class, 'detail');
+    Router::add('GET', '/404', ErrorController::class, 'error404');
 
     // Contoh Penggunaan Middleware
     // Router::add('GET', '/dashboard', DashboardController::class, 'homeDashboard', [AuthMiddleware::class]);
-
+    Router::cacheRoutes();
     Router::run();
 ?>

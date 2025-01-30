@@ -4,22 +4,19 @@
     use {{NAMESPACE}}\App\Database;
     use Faker\Factory;
 
-    class UserSeeder
-    {
+    class UserSeeder {
         protected Database $db;
 
-        public function __construct()
-        {
-            $this->db = new Database();
+        public function __construct() {
+            $this->db = Database::getInstance();
         }
 
-        public function run()
-        {
+        public function run() {
             $faker = Factory::create();
         
             $this->db->beginTransaction();
             try {
-                for ($i = 0; $i < 10; $i++) {
+                for ($i = 0; $i < 500; $i++) {
                     $this->db->query("INSERT INTO users (username, password, created_at) VALUES (:username, :password, :created_at)");
                     $this->db->bind(':username', $faker->name);
                     $this->db->bind(':password', $faker->email);
@@ -35,7 +32,4 @@
         }
         
     }
-
-
 ?>
-

@@ -1,41 +1,76 @@
 <?php
 
-namespace {{NAMESPACE}}\Controller;
+    namespace {{NAMESPACE}}\Controller;
 
-use {{NAMESPACE}}\App\Config;
-use {{NAMESPACE}}\App\Database;
-use {{NAMESPACE}}\App\View;
-use Exception; // Ensure to include Exception
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\App\Database;
+    use {{NAMESPACE}}\App\View;
 
-class HomeController
-{
-    function index() {
-        Config::loadEnv(); // Muat file .env
+    use {{NAMESPACE}}\Models\HomeModel;
+
+    use Exception; // Ensure to include Exception
+
+    class HomeController
+    {
+        function index() {
+            Config::loadEnv(); // Muat file .env
+            
+            try {
+                $db = Database::getInstance();
+                $status = "success";
+            } catch (Exception $e) {
+                $status = $e->getMessage();
+            }
+
+            $model = [
+                'status' => $status,
+                'base_url' => Config::get('BASE_URL')
+            ];
+
+            View::render('interface/home', $model);
         
-        try {
-            $db = new Database();
-            $status = "success";
-        } catch (Exception $e) {
-            $status = $e->getMessage();
+        
         }
 
-        $model = [
-            'title' => 'MVC Chandra',
-            'status' => $status,
-            'base_url' => Config::get('BASE_URL')
-        ];
+        function user() {
+            Config::loadEnv(); // Muat file .env
+            
+            $homeModel = new HomeModel();
+            $data = $homeModel->getUserData();
 
-        View::render('interface/home', $model);
-    
-    }
-    
-    function error404() {
-        Config::loadEnv(); // Muat file .env
-        $model = [
-            // 'title' => 'Judul Halaman'
-            'base_url' => Config::get('BASE_URL')
-        ];
+            try {
+                $db = Database::getInstance();
+                $status = "success";
+            } catch (Exception $e) {
+                $status = $e->getMessage();
+            }
 
-        View::render('interface/error404', $model);
+            $model = [
+                'userData' => $data['users'],
+                'status' => $status,
+                'base_url' => Config::get('BASE_URL')
+            ];
+
+            View::render('interface/user', $model);
+        
+        }
+
+        function detail(string $id) {
+            Config::loadEnv(); // Muat file .env
+            
+            $homeModel = new HomeModel();
+            $data = $homeModel->getUserData();
+
+            $userDetail = $homeModel->getUserDetail($id);
+
+            $model = [
+                'userData' => $data['users'],
+                'user' => $userDetail,
+                'base_url' => Config::get('BASE_URL')
+            ];
+
+            View::render('interface/detail', $model);
+        
+        }
     }
-}
+?>

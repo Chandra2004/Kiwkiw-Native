@@ -13,5 +13,4 @@
             return $_ENV[$key] ?? null; // Mengembalikan nilai dari .env atau null jika tidak ada
         }
     }
-
 ?>

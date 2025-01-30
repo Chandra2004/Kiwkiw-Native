@@ -1,20 +1,18 @@
 <?php
+    namespace {{NAMESPACE}}\Database;
 
-namespace {{NAMESPACE}}
+    use {{NAMESPACE}}\App\Database;
 
-use {{NAMESPACE}}\App\Database;
+    abstract class Migration {
+        protected Database $db;
 
-abstract class Migration
-{
-    protected Database $db;
+        public function __construct()
+        {
+            $this->db = Database::getInstance();
+        }
 
-    public function __construct()
-    {
-        $this->db = new Database();
+        abstract public function up();
+
+        abstract public function down();
     }
-
-    abstract public function up();
-
-    abstract public function down();
-}
 ?>

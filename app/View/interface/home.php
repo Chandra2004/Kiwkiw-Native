@@ -79,7 +79,6 @@
         }
     </style>
 </head>
-
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
     <!-- Navigation -->
     <nav class="bg-gray-900/20 backdrop-blur-lg border-b border-gray-800 fixed w-full top-0 z-50" aria-label="Main navigation">
