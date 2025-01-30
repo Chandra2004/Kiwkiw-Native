@@ -37,6 +37,7 @@
 ```sh
   composer require vlucas/phpdotenv   # Untuk konfigurasi .env
   composer require fakerphp/faker    # Untuk seeder
+  composer require illuminate/view illuminate/events illuminate/filesystem    #untuk blade templating
 ```
 
 ### 5️⃣ Konfigurasi `composer.json`
