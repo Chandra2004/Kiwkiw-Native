@@ -39,7 +39,7 @@
   composer require fakerphp/faker    # Untuk seeder
 ```
 
-### 5️⃣  Konfigurasi `composer.json`
+### 5️⃣ Konfigurasi `composer.json`
 
 Tambahkan pengaturan berikut ke dalam file `composer.json`:
 
@@ -48,16 +48,21 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
     "name": "namaprojek/anda",
     "autoload": {
         "psr-4": {
-            "namaprojek\\anda\\": "app/",
             "Database\\": "database/",
             "Database\\Migrations\\": "database/migrations/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
+    "files": [
+        "app/App/Config.php"
+    ],
     "require": {
         "php": ">=8"
     },
     "scripts": {
+      "post-autoload-dump": [
+          "{{NAMESPACE}}\\App\\Router::cacheRoutes"
+      ],
       "post-install-cmd": [
           "php update-namespace.php"
       ],
@@ -68,7 +73,13 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
 }
 ```
 
-### 6️⃣  Update Namespace Setelah Instalasi
+📌 **Setelah mencopy `composer.json` tersebut, jalankan perintah:**
+
+```sh
+  composer dump-autoload
+```
+
+### 6️⃣ Update Namespace Setelah Instalasi
 
 Jalankan update namespace agar autoload berjalan:
 
@@ -76,7 +87,7 @@ Jalankan update namespace agar autoload berjalan:
   php update-namespace.php
 ```
 
-Atau akses melalui browser: `http://localhost/kiwkiw/update-namespace.php`
+Atau akses melalui browser: `http://localhost/kiwkiw-native/update-namespace.php`
 
 ---
 
@@ -168,6 +179,18 @@ BASE_URL=http://localhost/Kiwkiw-Native/public
 
 ---
 
+## 🔎 Melihat Database Setelah Penginstalan
+
+Jika Anda ingin melihat bagaimana database bekerja setelah penginstalan Kiwkiw Native, jalankan perintah berikut di terminal:
+
+```sh
+  php artisan migrate:fresh
+```
+
+Setelah itu, buka URL `/user` di browser Anda. Untuk melihat lebih detail dari data user, klik pada user yang ingin dituju.
+
+---
+
 ## ✨ Kontribusi
 
 Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
@@ -179,5 +202,4 @@ Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
 
 ---
 
-Terima kasih telah menggunakan **Kiwkiw**! 🚀
-
+Terima kasih telah menggunakan **Kiwkiw-Native**! 🚀
