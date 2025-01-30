@@ -66,6 +66,7 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
       ]
     }
 }
+```
 
 ### 6️⃣  Update Namespace Setelah Instalasi
 
@@ -76,8 +77,6 @@ Jalankan update namespace agar autoload berjalan:
 ```
 
 Atau akses melalui browser: `http://localhost/kiwkiw/update-namespace.php`
-
-```
 
 ---
 
