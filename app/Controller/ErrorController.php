@@ -1,5 +1,4 @@
 <?php
-
     namespace {{NAMESPACE}}\Controller;
 
     use {{NAMESPACE}}\App\Config;

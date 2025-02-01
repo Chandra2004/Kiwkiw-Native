@@ -29,7 +29,6 @@
                 $this->db->rollBack();
                 echo "Error seeding: " . $e->getMessage();
             }
-        }
-        
+        }    
     }
 ?>

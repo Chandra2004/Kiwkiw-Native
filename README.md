@@ -118,13 +118,12 @@ Kiwkiw-Native/
 │   │       └── routes.cache
 │   ├── View/
 │   │   ├── error/
-│   │   │   ├── error404.blade.php
-│   │   │   └── error500.blade.php
+│   │   │   ├── error404.php
+│   │   │   └── error500.php
 │   │   └── interface/
-│   │       ├── detail.blade.php
-│   │       ├── home.blade.php
-│   │       └── user.blade.php
-│   └── BladeInit.php
+│   │       ├── detail.php
+│   │       ├── home.php
+│   │       └── user.php
 ├── database/
 │   ├── migrations/
 │   │   └── CreateUsersTable.php
@@ -209,6 +208,7 @@ Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
 
 - **WhatsApp**: 085730676143
 - **Email**: [chandratriantomo123@gmail.com](mailto\:chandratriantomo123@gmail.com)
+- **Website**: [Kiwkiw-Native](https://www.kiwkiw-native.free.nf)
 
 ---
 

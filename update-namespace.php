@@ -23,12 +23,12 @@
         echo "Namespace berhasil diperbarui di semua file PHP dalam app, migrations, dan seeders.\n";
     
         // Cek dan ganti namespace di public/index.php
-        $indexFile = __DIR__ . '/public/index.php';
+        $indexFile = __DIR__ . '/htdocs/index.php';
         if (file_exists($indexFile)) {
             $content = file_get_contents($indexFile);
             $updatedContent = str_replace('{{NAMESPACE}}', $newNamespace, $content);
             file_put_contents($indexFile, $updatedContent);
-            echo "Namespace di public/index.php berhasil diperbarui.\n";
+            echo "Namespace di htdocs/index.php berhasil diperbarui.\n";
         }
     
         // Update namespace pada composer.json (post-autoload-dump)

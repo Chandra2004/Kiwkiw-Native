@@ -1,5 +1,4 @@
 <?php
-
     namespace {{NAMESPACE}}\Controller;
 
     use {{NAMESPACE}}\App\Config;
@@ -10,8 +9,7 @@
 
     use Exception; // Ensure to include Exception
 
-    class HomeController
-    {
+    class HomeController {
         function index() {
             Config::loadEnv(); // Muat file .env
             

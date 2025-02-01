@@ -1,5 +1,4 @@
 <?php
-
     namespace {{NAMESPACE}}\app;
 
     class View {

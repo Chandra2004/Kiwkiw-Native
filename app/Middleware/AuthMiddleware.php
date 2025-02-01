@@ -1,6 +1,8 @@
 <?php
     namespace {{NAMESPACE}}\Middleware;
 
+    use {{NAMESPACE}}\App\Config;
+
     class AuthMiddleware implements Middleware {
         function before()
         {
