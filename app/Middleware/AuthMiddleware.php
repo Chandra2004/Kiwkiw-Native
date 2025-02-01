@@ -1,5 +1,5 @@
 <?php
-    namespace Punyachandra\KiwkiwNative\Middleware;
+    namespace {{NAMEPACE}}\Middleware;
 
     class AuthMiddleware implements Middleware {
         function before()

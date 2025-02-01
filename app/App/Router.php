@@ -1,9 +1,9 @@
 <?php
 
-    namespace Punyachandra\KiwkiwNative\App;
+    namespace {{NAMEPACE}}\App;
 
-    use Punyachandra\KiwkiwNative\App\Config;
-    use Punyachandra\KiwkiwNative\Controller\ErrorController;
+    use {{NAMEPACE}}\App\Config;
+    use {{NAMEPACE}}\Controller\ErrorController;
     use Exception;
 
     class Router {

@@ -1,7 +1,7 @@
 <?php
     namespace Database\Seeders;
 
-    use Punyachandra\KiwkiwNative\App\Database;
+    use {{NAMEPACE}}\App\Database;
     use Faker\Factory;
 
     class UserSeeder {

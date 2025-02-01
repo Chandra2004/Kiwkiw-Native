@@ -1,7 +1,7 @@
 <?php
-    namespace Punyachandra\KiwkiwNative\App;
+    namespace {{NAMEPACE}}\App;
 
-    use Punyachandra\KiwkiwNative\App\Config;
+    use {{NAMEPACE}}\App\Config;
     use Exception;
 
     class CacheManager {

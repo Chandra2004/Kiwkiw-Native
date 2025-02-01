@@ -1,10 +1,10 @@
 <?php
 
-    namespace Punyachandra\KiwkiwNative\Controller;
+    namespace {{NAMEPACE}}\Controller;
 
-    use Punyachandra\KiwkiwNative\App\Config;
-    use Punyachandra\KiwkiwNative\App\Database;
-    use Punyachandra\KiwkiwNative\App\View;
+    use {{NAMEPACE}}\App\Config;
+    use {{NAMEPACE}}\App\Database;
+    use {{NAMEPACE}}\App\View;
     use Exception; // Ensure to include Exception
 
     class ErrorController

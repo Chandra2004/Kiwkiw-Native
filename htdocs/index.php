@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Punyachandra\KiwkiwNative\BladeInit;
-use Punyachandra\KiwkiwNative\App\Config;
-use Punyachandra\KiwkiwNative\App\Router;
-use Punyachandra\KiwkiwNative\Middleware\AuthMiddleware;
-use Punyachandra\KiwkiwNative\Controller\HomeController;
+use {{NAMEPACE}}\BladeInit;
+use {{NAMEPACE}}\App\Config;
+use {{NAMEPACE}}\App\Router;
+use {{NAMEPACE}}\Middleware\AuthMiddleware;
+use {{NAMEPACE}}\Controller\HomeController;
 
 Config::loadEnv(); // Muat file .env
 

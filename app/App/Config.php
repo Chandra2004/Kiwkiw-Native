@@ -1,5 +1,5 @@
 <?php
-    namespace Punyachandra\KiwkiwNative\app;
+    namespace {{NAMEPACE}}\app;
 
     use Dotenv\Dotenv;
     use Predis\Client;

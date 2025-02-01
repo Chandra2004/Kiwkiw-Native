@@ -1,7 +1,7 @@
 <?php
-    namespace Punyachandra\KiwkiwNative\app;
+    namespace {{NAMEPACE}}\app;
 
-    use Punyachandra\KiwkiwNative\BladeInit; // Sesuaikan namespace
+    use {{NAMEPACE}}\BladeInit; // Sesuaikan namespace
     
     class View {
         public static function render($view, $data = []) {

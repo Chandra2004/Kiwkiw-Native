@@ -1,9 +1,9 @@
 <?php
-    namespace Punyachandra\KiwkiwNative\Models;
+    namespace {{NAMEPACE}}\Models;
 
-    use Punyachandra\KiwkiwNative\App\CacheManager;
-    use Punyachandra\KiwkiwNative\App\Database;
-    use Punyachandra\KiwkiwNative\App\Config;
+    use {{NAMEPACE}}\App\CacheManager;
+    use {{NAMEPACE}}\App\Database;
+    use {{NAMEPACE}}\App\Config;
 
     class HomeModel {
         private $db;

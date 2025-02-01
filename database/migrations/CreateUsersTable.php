@@ -1,7 +1,7 @@
 <?php
     namespace Database\Migrations;
 
-    use Punyachandra\KiwkiwNative\Database\Migration;
+    use {{NAMEPACE}}\Database\Migration;
 
     class CreateUsersTable extends Migration {
         public function up() {
