@@ -1,21 +1,21 @@
 <?php
+    namespace Punyachandra\KiwkiwNative\Controller;
 
-    namespace {{NAMESPACE}}\Controller;
+    use Punyachandra\KiwkiwNative\App\Config;
+    use Punyachandra\KiwkiwNative\App\Database;
+    use Punyachandra\KiwkiwNative\App\View;
 
-    use {{NAMESPACE}}\App\Config;
-    use {{NAMESPACE}}\App\Database;
-    use {{NAMESPACE}}\App\View;
+    use Punyachandra\KiwkiwNative\Models\HomeModel;
 
-    use {{NAMESPACE}}\Models\HomeModel;
-
-    use Exception; // Ensure to include Exception
+    use Exception;
 
     class HomeController
     {
-        function index() {
+        public function index() {
             Config::loadEnv(); // Muat file .env
             
             try {
+                // Ambil koneksi database jika diperlukan
                 $db = Database::getInstance();
                 $status = "success";
             } catch (Exception $e) {
@@ -23,54 +23,53 @@
             }
 
             $model = [
-                'status' => $status,
-                'base_url' => Config::get('BASE_URL')
+                'status' => $status
             ];
-
-            View::render('interface/home', $model);
-        
-        
+            View::render('interface.home', $model);
         }
 
-        function user() {
+        public function user() {
             Config::loadEnv(); // Muat file .env
-            
+
             $homeModel = new HomeModel();
+            // Ambil data user dari model, yang sudah menerapkan cache Redis
             $data = $homeModel->getUserData();
 
             try {
+                // Pastikan koneksi database juga bekerja dengan baik jika perlu
                 $db = Database::getInstance();
                 $status = "success";
             } catch (Exception $e) {
                 $status = $e->getMessage();
             }
 
+            // Pastikan $data berisi 'users' yang valid
             $model = [
-                'userData' => $data['users'],
+                'userData' => $data['users'] ?? [], // Tambahkan pengecekan untuk mencegah error jika data kosong
                 'status' => $status,
                 'base_url' => Config::get('BASE_URL')
             ];
 
-            View::render('interface/user', $model);
-        
+            View::render('interface.user', $model);
         }
 
-        function detail(string $id) {
+        public function detail(string $id) {
             Config::loadEnv(); // Muat file .env
             
             $homeModel = new HomeModel();
-            $data = $homeModel->getUserData();
+            // Ambil data user dan detailnya
+            $data = $homeModel->getUserData(); // Ini mengambil semua data user
+            $userDetail = $homeModel->getUserDetail($id); // Ini mengambil detail user berdasarkan ID
 
-            $userDetail = $homeModel->getUserDetail($id);
-
+            // Siapkan model yang akan diteruskan ke view
             $model = [
-                'userData' => $data['users'],
-                'user' => $userDetail,
+                'userData' => $data['users'] ?? [], // Pengecekan data user
+                'user' => $userDetail ?? null, // Pengecekan detail user
                 'base_url' => Config::get('BASE_URL')
             ];
 
-            View::render('interface/detail', $model);
-        
+            View::render('interface.detail', $model);
         }
     }
+
 ?>

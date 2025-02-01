@@ -184,7 +184,7 @@
             <h2 id="db-status" class="sr-only">Database Connection Status</h2>
             <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 max-w-md mx-auto">
                 <div class="flex items-center justify-center space-x-3">
-                    <?php if ($model['status'] == "success") : ?>
+                    @if ($status == "success")
                         <div class="w-9 h-9 bg-cyan-400/10 rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/>
@@ -194,7 +194,7 @@
                             <p class="text-cyan-400 font-medium">Database Connected</p>
                             <p class="text-gray-400 text-sm">MySQL Server 8.0+ Ready</p>
                         </div>
-                    <?php else : ?>
+                    @else
                         <div class="w-9 h-9 bg-red-400/10 rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
@@ -204,7 +204,7 @@
                             <p class="text-red-400 font-medium">Connection Error</p>
                             <p class="text-gray-400 text-sm">Check MySQL Configuration</p>
                         </div>
-                    <?php endif; ?>
+                    @endif
                 </div>
             </div>
         </section>

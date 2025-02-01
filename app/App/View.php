@@ -1,11 +1,11 @@
 <?php
+    namespace Punyachandra\KiwkiwNative\app;
 
-    namespace {{NAMESPACE}}\app;
-
+    use Punyachandra\KiwkiwNative\BladeInit; // Sesuaikan namespace
+    
     class View {
-        public static function render(string $view, $model)
-        {
-            require __DIR__ . '/../View/' . $view . '.php';
+        public static function render($view, $data = []) {
+            echo BladeInit::getInstance()->make($view, $data)->render();
         }
     }
 ?>

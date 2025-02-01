@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐦</text></svg>">
+    
     <!-- Primary Meta Tags -->
     <title>User Management - Kiwkiw MVC</title>
     <meta name="description" content="User management interface for Kiwkiw MVC framework">
@@ -57,19 +60,27 @@
             </h1>
         </div>
 
+        <div class="mb-8">
+            <a href="{{ $base_url }}/" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back to Homepage
+            </a>
+        </div>
+
         <!-- User List -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php if (!empty($model['userData'])) : ?>
-                <?php foreach ($model['userData'] as $user) : ?>
-                    <a href="<?= $model['base_url']?>/user/information/<?= $user['id'] ?>" 
-                       class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-cyan-400/30 transition-all group">
+            @if (!empty($userData))
+                @foreach ( $userData as $userItem)
+                    <a href="{{ $base_url }}/user/information/{{ $userItem['id'] }}" class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-cyan-400/30 transition-all group">
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-100 mb-1 group-hover:text-cyan-400 transition-colors">
-                                    <?= htmlspecialchars($user['username']) ?>
+                                    {{ $userItem['username'] }}
                                 </h3>
                                 <p class="text-gray-400 text-sm">
-                                    Member since <?= date('M Y', strtotime($user['created_at'])) ?>
+                                    Member since {{ $userItem['created_at'] }}
                                 </p>
                             </div>
                             <div class="bg-cyan-400/10 p-3 rounded-lg">
@@ -79,8 +90,8 @@
                             </div>
                         </div>
                     </a>
-                <?php endforeach; ?>
-            <?php else : ?>
+                @endforeach
+            @else
                 <div class="col-span-full bg-gray-800/50 p-8 rounded-2xl border border-gray-700/50 text-center">
                     <div class="text-cyan-400 mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +101,7 @@
                     <h3 class="text-xl font-semibold text-gray-100 mb-2">No Users Found</h3>
                     <p class="text-gray-400">Create your first user to get started</p>
                 </div>
-            <?php endif; ?>
+            @endif
         </div>
     </main>
 

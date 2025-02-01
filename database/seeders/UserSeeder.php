@@ -1,7 +1,7 @@
 <?php
     namespace Database\Seeders;
 
-    use {{NAMESPACE}}\App\Database;
+    use Punyachandra\KiwkiwNative\App\Database;
     use Faker\Factory;
 
     class UserSeeder {
@@ -16,7 +16,7 @@
         
             $this->db->beginTransaction();
             try {
-                for ($i = 0; $i < 500; $i++) {
+                for ($i = 0; $i < 10; $i++) {
                     $this->db->query("INSERT INTO users (username, password, created_at) VALUES (:username, :password, :created_at)");
                     $this->db->bind(':username', $faker->name);
                     $this->db->bind(':password', $faker->email);

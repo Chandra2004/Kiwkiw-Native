@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐦</text></svg>">
+    
     <!-- Primary Meta Tags -->
     <title>User Details - Kiwkiw MVC</title>
     <meta name="description" content="User detail information page for Kiwkiw MVC framework">
@@ -53,7 +56,7 @@
     <main class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="max-w-3xl mx-auto">
             <div class="mb-8">
-                <a href="<?= $model['base_url'] ?>/user" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
+                <a href="{{ $base_url }}/user" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -68,7 +71,7 @@
                         User Details
                     </h1>
                     <span class="bg-cyan-400/10 text-cyan-400 px-4 py-2 rounded-full text-sm">
-                        ID: <?= htmlspecialchars($model['user']['id']) ?>
+                        ID: {{ $user['id'] }}
                     </span>
                 </div>
 
@@ -77,18 +80,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Username</p>
-                            <p class="text-gray-100 font-medium"><?= htmlspecialchars($model['user']['username']) ?></p>
+                            <p class="text-gray-100 font-medium">{{ $user['username'] }}</p>
                         </div>
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Account Created</p>
                             <p class="text-gray-100 font-medium">
-                                <?= date('M d, Y H:i', strtotime($model['user']['created_at'])) ?>
+                                {{ $user['created_at'] }}
                             </p>
                         </div>
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Password Hash</p>
                             <p class="text-gray-100 font-mono text-sm break-all">
-                                <?= htmlspecialchars($model['user']['password']) ?>
+                                {{ $user['password'] }}
                             </p>
                         </div>
                     </div>

@@ -1,10 +1,10 @@
 <?php
 
-    namespace {{NAMESPACE}}\Controller;
+    namespace Punyachandra\KiwkiwNative\Controller;
 
-    use {{NAMESPACE}}\App\Config;
-    use {{NAMESPACE}}\App\Database;
-    use {{NAMESPACE}}\App\View;
+    use Punyachandra\KiwkiwNative\App\Config;
+    use Punyachandra\KiwkiwNative\App\Database;
+    use Punyachandra\KiwkiwNative\App\View;
     use Exception; // Ensure to include Exception
 
     class ErrorController
@@ -15,7 +15,7 @@
                 'base_url' => Config::get('BASE_URL')
             ];
 
-            View::render('error/error404', $model);
+            View::render('error.error404', $model);
         }
         
         function error500() {
@@ -24,7 +24,7 @@
                 'base_url' => Config::get('BASE_URL')
             ];
 
-            View::render('error/error500', $model);
+            View::render('error.error500', $model);
         }
     }
 ?>

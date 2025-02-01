@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMESPACE}}\Middleware;
+    namespace Punyachandra\KiwkiwNative\Middleware;
 
-    use {{NAMESPACE}}\App\Config;
+    use Punyachandra\KiwkiwNative\App\Config;
 
     interface Middleware {
         function before();
