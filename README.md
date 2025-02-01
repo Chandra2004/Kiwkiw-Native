@@ -37,6 +37,8 @@
 ```sh
   composer require vlucas/phpdotenv   # Untuk konfigurasi .env
   composer require fakerphp/faker    # Untuk seeder
+  composer require illuminate/view illuminate/events illuminate/filesystem    # Untuk blade templating
+  composer require predis/predis # Untuk Redis cache
 ```
 
 ### 5️⃣ Konfigurasi `composer.json`
@@ -94,44 +96,54 @@ Atau akses melalui browser: `http://localhost/kiwkiw-native/update-namespace.php
 ## 📂 Struktur Direktori
 
 ```
-kiwkiw/
+Kiwkiw-Native/
 ├── app/
 │   ├── App/
+│   │   ├── CacheManager.php
 │   │   ├── Config.php
 │   │   ├── Database.php
 │   │   ├── Router.php
-│   │   ├── View.php
+│   │   └── View.php
 │   ├── Controller/
-│   │   ├── HomeController.php
+│   │   ├── ErrorController.php
+│   │   └── HomeController.php
 │   ├── Database/
-│   │   ├── Migration.php
+│   │   └── Migration.php
 │   ├── Middleware/
-│   │   ├── AuthMiddleware.php
 │   │   ├── Middleware.php
+│   │   └── AuthMiddleware.php
 │   ├── Models/
-│   │   ├── HomeModel.php
+│   │   └── HomeModel.php
+│   ├── Storage/
+│   │   └── cache/
+│   │       ├── views/
+│   │       └── routes.cache
 │   ├── View/
-│   │   ├── interface/
-│   │   ├── error404.php
-│   │   ├── home.php
+│   │   ├── error/
+│   │   │   ├── error404.blade.php
+│   │   │   └── error500.blade.php
+│   │   └── interface/
+│   │       ├── detail.blade.php
+│   │       ├── home.blade.php
+│   │       └── user.blade.php
+│   └── BladeInit.php
 ├── database/
 │   ├── migrations/
-│   │   ├── CreateUsersTable.php
-│   ├── seeders/
-│   │   ├── UserSeeder.php
+│   │   └── CreateUsersTable.php
+│   └── seeders/
+│       └── UserSeeder.php
 ├── public/
-│   ├── .htaccess
-│   ├── index.php
+│   ├── _htaccess
+│   └── index.php
 ├── vendor/
 ├── .env
-├── .gitignore
+├── gitignore
 ├── artisan
 ├── artisan.bat
 ├── composer.json
 ├── composer.lock
 ├── README.md
-├── tailwind.config.js
-├── update-namespace.php
+└── update-namespace.php
 ```
 
 ---
@@ -199,7 +211,8 @@ Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
 
 - **WhatsApp**: 085730676143
 - **Email**: [chandratriantomo123@gmail.com](mailto\:chandratriantomo123@gmail.com)
-
+- **Website**: [Kiwkiw-Native](https://www.kiwkiw-native.free.nf)
+  
 ---
 
 Terima kasih telah menggunakan **Kiwkiw-Native**! 🚀
