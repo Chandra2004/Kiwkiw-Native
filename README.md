@@ -37,7 +37,8 @@
 ```sh
   composer require vlucas/phpdotenv   # Untuk konfigurasi .env
   composer require fakerphp/faker    # Untuk seeder
-  composer require illuminate/view illuminate/events illuminate/filesystem    #untuk blade templating
+  composer require illuminate/view illuminate/events illuminate/filesystem    # Untuk blade templating
+  composer require predis/predis # Untuk Redis cache
 ```
 
 ### 5️⃣ Konfigurasi `composer.json`
@@ -98,6 +99,7 @@ Atau akses melalui browser: `http://localhost/kiwkiw-native/update-namespace.php
 Kiwkiw-Native/
 ├── app/
 │   ├── App/
+│   │   ├── CacheManager.php
 │   │   ├── Config.php
 │   │   ├── Database.php
 │   │   ├── Router.php
@@ -209,7 +211,8 @@ Jika ingin berkontribusi, silakan buat pull request atau hubungi saya!
 
 - **WhatsApp**: 085730676143
 - **Email**: [chandratriantomo123@gmail.com](mailto\:chandratriantomo123@gmail.com)
-
+- **Website**: [Kiwkiw-Native](https://www.kiwkiw-native.free.nf)
+  
 ---
 
 Terima kasih telah menggunakan **Kiwkiw-Native**! 🚀
