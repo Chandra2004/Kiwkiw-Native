@@ -13,6 +13,11 @@
   cd Kiwkiw-Native
 ```
 
+📌 **Catatan**: jika ingin tidak memakai ada redis.
+```sh
+git clone -b mvc-finish https://github.com/Chandra2004/Kiwkiw-Native.git
+```
+
 ### 2️⃣ Inisialisasi Composer
 
 ```sh
