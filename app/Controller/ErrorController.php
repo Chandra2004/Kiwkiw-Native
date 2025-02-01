@@ -1,11 +1,8 @@
 <?php
+    namespace Punyachandra\Main\Controller;
 
-    namespace {{NAMEPACE}}\Controller;
-
-    use {{NAMEPACE}}\App\Config;
-    use {{NAMEPACE}}\App\Database;
-    use {{NAMEPACE}}\App\View;
-    use Exception; // Ensure to include Exception
+    use Punyachandra\Main\App\Config;
+    use Punyachandra\Main\App\View;
 
     class ErrorController
     {

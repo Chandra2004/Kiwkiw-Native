@@ -1,7 +1,5 @@
 <?php
-    namespace {{NAMEPACE}}\Middleware;
-
-    use {{NAMEPACE}}\App\Config;
+    namespace Punyachandra\Main\Middleware;
 
     interface Middleware {
         function before();

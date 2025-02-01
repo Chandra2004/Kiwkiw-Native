@@ -1,7 +1,7 @@
 <?php
     namespace Database\Migrations;
 
-    use {{NAMEPACE}}\Database\Migration;
+    use Punyachandra\Main\Database\Migration;
 
     class CreateUsersTable extends Migration {
         public function up() {

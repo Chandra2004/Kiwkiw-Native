@@ -1,33 +1,18 @@
 <?php
-    namespace {{NAMEPACE}}\Models;
+    namespace Punyachandra\Main\Models;
 
-    use {{NAMEPACE}}\App\CacheManager;
-    use {{NAMEPACE}}\App\Database;
-    use {{NAMEPACE}}\App\Config;
+    use Punyachandra\Main\App\CacheManager;
+    use Punyachandra\Main\App\Database;
+    use Punyachandra\Main\App\Config;
 
     class HomeModel {
         private $db;
 
         public function __construct()
         {
-            // $this->db = new Database();
             $this->db = Database::getInstance();
         }
 
-        // public function getUserData() {
-        //     $this->db->query("SELECT * FROM users");
-        //     $data['users'] = $this->db->resultSet();
-
-        //     return $data;
-        // }
-
-        // public function getUserDetail($id) {
-        //     $this->db->query("SELECT * FROM users WHERE id = :id");
-        //     $this->db->bind('id', $id);
-        //     $data = $this->db->single();
-
-        //     return $data;
-        // }
         public function getUserData() {
             return CacheManager::remember(
                 'all_users', 

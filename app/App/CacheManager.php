@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMEPACE}}\App;
+    namespace Punyachandra\Main\App;
 
-    use {{NAMEPACE}}\App\Config;
+    use Punyachandra\Main\App\Config;
     use Exception;
 
     class CacheManager {

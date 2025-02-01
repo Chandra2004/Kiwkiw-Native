@@ -1,11 +1,11 @@
 <?php
-    namespace {{NAMEPACE}}\Controller;
+    namespace Punyachandra\Main\Controller;
 
-    use {{NAMEPACE}}\App\Config;
-    use {{NAMEPACE}}\App\Database;
-    use {{NAMEPACE}}\App\View;
+    use Punyachandra\Main\App\Config;
+    use Punyachandra\Main\App\Database;
+    use Punyachandra\Main\App\View;
 
-    use {{NAMEPACE}}\Models\HomeModel;
+    use Punyachandra\Main\Models\HomeModel;
 
     use Exception;
 
@@ -71,5 +71,4 @@
             View::render('interface.detail', $model);
         }
     }
-
 ?>

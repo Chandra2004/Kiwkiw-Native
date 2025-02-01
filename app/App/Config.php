@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMEPACE}}\app;
+    namespace Punyachandra\Main\app;
 
     use Dotenv\Dotenv;
     use Predis\Client;

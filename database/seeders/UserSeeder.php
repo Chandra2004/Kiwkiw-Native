@@ -1,7 +1,7 @@
 <?php
     namespace Database\Seeders;
 
-    use {{NAMEPACE}}\App\Database;
+    use Punyachandra\Main\App\Database;
     use Faker\Factory;
 
     class UserSeeder {

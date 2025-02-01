@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMEPACE}}\Database;
+    namespace Punyachandra\Main\Database;
 
-    use {{NAMEPACE}}\App\Database;
+    use Punyachandra\Main\App\Database;
 
     abstract class Migration {
         protected Database $db;

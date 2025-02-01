@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMEPACE}};
+    namespace Punyachandra\Main;
 
     use Illuminate\View\Factory;
     use Illuminate\Events\Dispatcher;
@@ -44,5 +44,4 @@
             return self::init();
         }
     }
-
 ?>

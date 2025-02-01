@@ -1,6 +1,8 @@
 <?php
-    namespace {{NAMEPACE}}\Middleware;
-
+    namespace Punyachandra\Main\Middleware;
+    
+    use Punyachandra\Main\App\Config;
+    
     class AuthMiddleware implements Middleware {
         function before()
         {

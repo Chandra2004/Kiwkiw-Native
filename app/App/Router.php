@@ -1,9 +1,8 @@
 <?php
+    namespace Punyachandra\Main\App;
 
-    namespace {{NAMEPACE}}\App;
-
-    use {{NAMEPACE}}\App\Config;
-    use {{NAMEPACE}}\Controller\ErrorController;
+    use Punyachandra\Main\App\Config;
+    use Punyachandra\Main\Controller\ErrorController;
     use Exception;
 
     class Router {
