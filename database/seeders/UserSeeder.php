@@ -1,35 +1,64 @@
 <?php
-    namespace Database\Seeders;
+namespace Database\Seeders;
 
-    use Punyachandra\Main\App\Database;
-    use Faker\Factory;
+use {{NAMESPACE}}\Models\Seeders\User;
 
-    class UserSeeder {
-        protected Database $db;
+use Faker\Factory;
 
-        public function __construct() {
-            $this->db = Database::getInstance();
+class UserSeeder {
+    private function downloadImage($url, $destination) {
+        $ch = curl_init($url);
+        $fp = fopen($destination, 'wb');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        $success = curl_exec($ch);
+        fclose($fp);
+        curl_close($ch);
+
+        if (!$success) {
+            unlink($destination);
+            throw new \Exception("Failed to download image from $url");
         }
+    }
 
-        public function run() {
-            $faker = Factory::create();
+    public function run() {
+        $faker = Factory::create();
+        $faker->unique(true); // Reset uniqueness
         
-            $this->db->beginTransaction();
+        $uploadDir = __DIR__ . '/../../htdocs/uploads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+    
+        for ($i = 0; $i < 10; $i++) {
+            $imageUrl = "https://picsum.photos/1920/1080.webp";
+            $uniqueFileName = 'profile_' . uniqid() . '.webp';
+            $imagePath = $uploadDir . $uniqueFileName;
+    
             try {
-                for ($i = 0; $i < 10; $i++) {
-                    $this->db->query("INSERT INTO users (username, password, created_at) VALUES (:username, :password, :created_at)");
-                    $this->db->bind(':username', $faker->name);
-                    $this->db->bind(':password', $faker->email);
-                    $this->db->bind(':created_at', date('Y-m-d H:i:s'));
-                    $this->db->execute(); // Tambahkan ini agar query berjalan
+                $this->downloadImage($imageUrl, $imagePath);
+                if (!file_exists($imagePath)) {
+                    throw new \Exception("Image not saved at $imagePath");
                 }
-                $this->db->commit();
-                echo "Seeding successful!\n";
+    
+                User::create([
+                    'name' => $faker->name,
+                    'email' => $faker->unique()->safeEmail,
+                    'password' => password_hash('password123', PASSWORD_BCRYPT),
+                    'profile_picture' => $uniqueFileName,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+    
             } catch (\Exception $e) {
-                $this->db->rollBack();
-                echo "Error seeding: " . $e->getMessage();
+                echo "Error: " . $e->getMessage() . "\n";
             }
         }
-        
+    
+        echo "Seeding successful!\n";
     }
-?>
+    
+}

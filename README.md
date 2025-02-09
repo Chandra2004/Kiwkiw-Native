@@ -44,6 +44,7 @@ git clone -b mvc-finish https://github.com/Chandra2004/Kiwkiw-Native.git
   composer require fakerphp/faker    # Untuk seeder
   composer require illuminate/view illuminate/events illuminate/filesystem    # Untuk blade templating
   composer require predis/predis # Untuk Redis cache
+  composer require spatie/image-optimizer #image
 ```
 
 ### 5️⃣ Konfigurasi `composer.json`
@@ -104,10 +105,13 @@ Atau akses melalui browser: `http://localhost/kiwkiw-native/update-namespace.php
 Kiwkiw-Native/
 ├── app/
 │   ├── App/
+│   │   ├── Blueprint.php
 │   │   ├── CacheManager.php
 │   │   ├── Config.php
 │   │   ├── Database.php
+│   │   ├── ImageOptimizer.php
 │   │   ├── Router.php
+│   │   ├── Schema.php
 │   │   └── View.php
 │   ├── Controller/
 │   │   ├── ErrorController.php
@@ -118,6 +122,8 @@ Kiwkiw-Native/
 │   │   ├── Middleware.php
 │   │   └── AuthMiddleware.php
 │   ├── Models/
+│   │   ├── Seeders/
+│   │   │   └── User.php
 │   │   └── HomeModel.php
 │   ├── Storage/
 │   │   └── cache/
@@ -137,8 +143,9 @@ Kiwkiw-Native/
 │   │   └── CreateUsersTable.php
 │   └── seeders/
 │       └── UserSeeder.php
-├── public/
-│   ├── _htaccess
+├── htdocs/
+│   ├── uploads/
+│   ├── .htaccess
 │   └── index.php
 ├── vendor/
 ├── .env
@@ -205,6 +212,15 @@ Jika Anda ingin melihat bagaimana database bekerja setelah penginstalan Kiwkiw N
 ```
 
 Setelah itu, buka URL `/user` di browser Anda. Untuk melihat lebih detail dari data user, klik pada user yang ingin dituju.
+
+---
+
+#### 📌 Note Patch
+
+Menambahkan sedikit pembaharuan :
+-- daerah upload (ketika user ingin mengupload foto atau selainnya)
+-- daerah migration & seeder lebih dipermudah karena adanya schema dan blueprint
+-- daerah artisan agar CLI lebih interaktif
 
 ---
 

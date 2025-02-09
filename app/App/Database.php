@@ -1,9 +1,9 @@
 <?php
-    namespace Punyachandra\Main\App;
+    namespace {{NAMESPACE}}\App;
 
     use PDO;
     use PDOException;
-    use Punyachandra\Main\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     class Database {
         private static $instance = null;

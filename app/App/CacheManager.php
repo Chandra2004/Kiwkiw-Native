@@ -1,26 +1,49 @@
 <?php
-    namespace Punyachandra\Main\App;
+    namespace {{NAMESPACE}}\App;
 
-    use Punyachandra\Main\App\Config;
+    use {{NAMESPACE}}\App\Config;
     use Exception;
 
     class CacheManager {
+        /**
+         * Mengambil data dari cache jika tersedia, atau menyimpan hasil callback ke cache.
+         *
+         * @param string $key Kunci cache
+         * @param int $ttl Waktu hidup cache dalam detik
+         * @param callable $callback Fungsi untuk menghasilkan data jika tidak ada di cache
+         * @return mixed Data yang diambil dari cache atau hasil callback
+         */
         public static function remember($key, $ttl, $callback) {
             try {
                 $redis = Config::redis();
                 $cached = $redis->get($key);
-                
+
                 if ($cached) {
                     return json_decode($cached, true);
                 }
-                
+
                 $data = $callback();
                 $redis->setex($key, $ttl, json_encode($data));
                 return $data;
-                
             } catch (Exception $e) {
                 // Fallback ke database jika Redis down
                 return $callback();
+            }
+        }
+
+        /**
+         * Menghapus data dari cache berdasarkan kunci tertentu.
+         *
+         * @param string $key Kunci cache yang akan dihapus
+         * @return bool True jika berhasil dihapus, false jika gagal
+         */
+        public static function forget($key) {
+            try {
+                $redis = Config::redis();
+                return $redis->del($key) > 0; // Mengembalikan true jika ada data yang dihapus
+            } catch (Exception $e) {
+                // Jika Redis down, abaikan kesalahan dan kembalikan false
+                return false;
             }
         }
     }

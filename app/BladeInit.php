@@ -1,5 +1,5 @@
 <?php
-    namespace Punyachandra\Main;
+    namespace {{NAMESPACE}};
 
     use Illuminate\View\Factory;
     use Illuminate\Events\Dispatcher;

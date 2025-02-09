@@ -1,8 +1,8 @@
 <?php
-    namespace Punyachandra\Main\Controller;
+    namespace {{NAMESPACE}}\Controller;
 
-    use Punyachandra\Main\App\Config;
-    use Punyachandra\Main\App\View;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\App\View;
 
     class ErrorController
     {

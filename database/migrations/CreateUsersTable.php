@@ -1,24 +1,23 @@
 <?php
-    namespace Database\Migrations;
+namespace Database\Migrations;
 
-    use Punyachandra\Main\Database\Migration;
+use {{NAMESPACE}}\App\Schema;
 
-    class CreateUsersTable extends Migration {
-        public function up() {
-            $sql = "CREATE TABLE IF NOT EXISTS users (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                username VARCHAR(50) NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )";
-            $this->db->query($sql);
-            $this->db->execute();
-        }
-
-        public function down() {
-            $sql = "DROP TABLE IF EXISTS users";
-            $this->db->query($sql);
-            $this->db->execute();
-        }
+class CreateUsersTable {
+    public function up() {
+        Schema::create('users', function ($table) {
+            $table->increments('id');
+            $table->string('name', 100);
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('profile_picture')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
+        });
     }
-?>
+
+    public function down() {
+        Schema::dropIfExists('users');
+    }
+}

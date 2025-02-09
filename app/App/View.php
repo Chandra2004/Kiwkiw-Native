@@ -1,7 +1,7 @@
 <?php
-    namespace Punyachandra\Main\app;
+    namespace {{NAMESPACE}}\app;
 
-    use Punyachandra\Main\BladeInit;
+    use {{NAMESPACE}}\BladeInit;
     
     class View {
         public static function render($view, $data = []) {

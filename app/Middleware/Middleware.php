@@ -1,5 +1,5 @@
 <?php
-    namespace Punyachandra\Main\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
 
     interface Middleware {
         function before();

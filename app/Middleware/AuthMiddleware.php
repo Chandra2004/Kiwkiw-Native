@@ -1,7 +1,7 @@
 <?php
-    namespace Punyachandra\Main\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
     
-    use Punyachandra\Main\App\Config;
+    use {{NAMESPACE}}\App\Config;
     
     class AuthMiddleware implements Middleware {
         function before()
