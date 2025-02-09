@@ -217,7 +217,9 @@ Setelah itu, buka URL `/user` di browser Anda. Untuk melihat lebih detail dari d
 
 #### 📌 Note Patch
 
-Menambahkan sedikit pembaharuan (09 Februari 2025) :
+Menambahkan sedikit pembaharuan :
+
+(09 Februari 2025)
 1. daerah upload (ketika user ingin mengupload foto atau selainnya).
 2. daerah migration & seeder lebih dipermudah karena adanya schema dan blueprint.
 3. daerah artisan agar CLI lebih interaktif.
