@@ -218,9 +218,9 @@ Setelah itu, buka URL `/user` di browser Anda. Untuk melihat lebih detail dari d
 #### 📌 Note Patch
 
 Menambahkan sedikit pembaharuan :
--- daerah upload (ketika user ingin mengupload foto atau selainnya).
--- daerah migration & seeder lebih dipermudah karena adanya schema dan blueprint.
--- daerah artisan agar CLI lebih interaktif.
+1. daerah upload (ketika user ingin mengupload foto atau selainnya).
+2. daerah migration & seeder lebih dipermudah karena adanya schema dan blueprint.
+3. daerah artisan agar CLI lebih interaktif.
 
 ---
 
