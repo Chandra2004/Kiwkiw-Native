@@ -1,262 +1,200 @@
 <?php
-    namespace {{NAMESPACE}}\Controller;
+    namespace User\KiwkiwNative\Controller;
 
     use Spatie\ImageOptimizer\OptimizerChainFactory;
-
-    use {{NAMESPACE}}\App\Config;
-    use {{NAMESPACE}}\App\Database;
-    use {{NAMESPACE}}\App\View;
-
-    // Models
-    use {{NAMESPACE}}\Models\HomeModel;
-    // ========
-
-    use {{NAMESPACE}}\App\CacheManager;
-
+    use User\KiwkiwNative\App\{Config, Database, View, CacheManager};
+    use User\KiwkiwNative\Models\HomeModel;
     use Exception;
 
-    class HomeController
-    {
-        public function index() {
-            Config::loadEnv(); // Muat file .env
-            
-            try {
-                // Ambil koneksi database jika diperlukan
-                $db = Database::getInstance();
-                $status = "success";
-            } catch (Exception $e) {
-                $status = $e->getMessage();
-            }
+    class HomeController {
+        private $homeModel;
 
-            $model = [
-                'status' => $status
-            ];
-            View::render('interface.home', $model);
+        public function __construct() {
+            $this->homeModel = new HomeModel();
+        }
+
+        public function index() {
+            View::render('interface.home', ['status' => $this->checkDatabaseConnection()]);
         }
 
         public function user() {
-            Config::loadEnv(); // Muat file .env
-
-            $homeModel = new HomeModel();
-            // Ambil data user dari model, yang sudah menerapkan cache Redis
-            $data = $homeModel->getUserData();
-
-            try {
-                // Pastikan koneksi database juga bekerja dengan baik jika perlu
-                $db = Database::getInstance();
-                $status = "success";
-            } catch (Exception $e) {
-                $status = $e->getMessage();
-            }
-
-            // Pastikan $data berisi 'users' yang valid
-            $model = [
-                'userData' => $data['users'] ?? [], // Tambahkan pengecekan untuk mencegah error jika data kosong
-                'status' => $status,
-                'base_url' => Config::get('BASE_URL')
-            ];
-
-            View::render('interface.user', $model);
+            View::render('interface.user', [
+                'userData' => $this->homeModel->getUserData()['users'] ?? [],
+                'status' => $this->checkDatabaseConnection(),
+            ]);
         }
 
         public function detail(string $id) {
-            Config::loadEnv(); // Muat file .env
+            $userDetail = $this->homeModel->getUserDetail($id);
+            if (!$userDetail) return $this->redirectToNotFound();
             
-            $homeModel = new HomeModel();
-            // Ambil data user dan detailnya
-            $data = $homeModel->getUserData(); // Ini mengambil semua data user
-            $userDetail = $homeModel->getUserDetail($id); // Ini mengambil detail user berdasarkan ID
-
-            if (!$userDetail) {
-                header("Location: " . Config::get('BASE_URL') . "/404");
-                exit();
-            }
-
-            // Siapkan model yang akan diteruskan ke view
-            $model = [
-                'userData' => $data['users'] ?? [], // Pengecekan data user
-                'user' => $userDetail ?? null, // Pengecekan detail user
-                'base_url' => Config::get('BASE_URL')
-            ];
-
-            View::render('interface.detail', $model);
+            View::render('interface.detail', [
+                'userData' => $this->homeModel->getUserData()['users'] ?? [],
+                'user' => $userDetail,
+            ]);
         }
 
         public function deleteUser(string $id) {
-            Config::loadEnv();
-
             try {
-                $homeModel = new HomeModel();
-                // Hapus data pengguna dari database
-                $homeModel->deleteUserData($id);
-
-                // Hapus cache Redis
-                CacheManager::forget('all_users');
-                CacheManager::forget("user_detail:{$id}");
-                
-                // pesan sukses
-                header('Location: ' . Config::get('BASE_URL') . '/user?status=success&message=User delete successfully');
+                $this->homeModel->deleteUserData($id);
+                CacheManager::forget(['all_users', "user_detail:{$id}"]);
+                $this->redirect('/user', 'success', 'User deleted successfully');
             } catch (Exception $e) {
-                //pesan gagal;
-                header('Location: ' . Config::get('BASE_URL') . '/user?status=success&message=' . urldecode($e->getMessage()));
+                $this->redirect('/user', 'error', $e->getMessage());
             }
         }
 
         public function createUser() {
-            Config::loadEnv();
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') return View::render('interface.user');
         
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $name = $_POST['name'] ?? '';
-                $email = $_POST['email'] ?? '';
-                $profilePicture = $_FILES['profile_picture'] ?? null;
+            $name = $_POST['name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $profilePicture = $_FILES['profile_picture'] ?? null;
         
-                // Validasi input
-                if (empty($name) || empty($email)) {
-                    View::render('interface.user', ['error' => "Name and email cannot be empty"]);
-                    return;
+            if (empty($name) || empty($email)) {
+                return View::render('interface.user', ['error' => "Name and email cannot be empty"]);
+            }
+        
+            $fileName = null; // Default null jika tidak ada foto
+            if ($profilePicture && $profilePicture['error'] === UPLOAD_ERR_OK) {
+                $fileName = $this->processImage($profilePicture);
+                if ($fileName instanceof Exception) {
+                    return View::render('interface.user', ['error' => $fileName->getMessage()]);
                 }
+            }
         
-                if ($profilePicture && $profilePicture['error'] === UPLOAD_ERR_OK) {
-                    // Validasi ekstensi file
-                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
-                    $fileExtension = pathinfo($profilePicture['name'], PATHINFO_EXTENSION);
+            try {
+                $db = Database::getInstance();
+                $db->query("INSERT INTO users (name, email, profile_picture) VALUES (:name, :email, :profile_picture)");
+                
+                $db->bind(':name', $name);
+                $db->bind(':email', $email);
+                $db->bind(':profile_picture', $fileName); // Bisa null jika tidak ada foto
+                
+                $db->execute();
+                $this->redirect('/user');
+            } catch (Exception $e) {
+                View::render('interface.user', ['error' => "Failed to save user data: " . $e->getMessage()]);
+            }
+        }        
+
+        public function updateUser(string $id) {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->redirect("/user/{$id}");
         
-                    if (!in_array($fileExtension, $allowedExtensions)) {
-                        View::render('interface.user', ['error' => "Invalid file type. Only JPG, JPEG, and PNG are allowed."]);
-                        return;
-                    }
+            $name = $_POST['name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $profilePicture = $_FILES['profile_picture'] ?? null;
+            $deleteProfilePicture = isset($_POST['delete_profile_picture']); // Cek apakah user ingin menghapus foto
         
-                    // Validasi ukuran file
-                    $maxFileSize = 2 * 1024 * 1024; // 2MB
-                    if ($profilePicture['size'] > $maxFileSize) {
-                        View::render('interface.user', ['error' => "File size exceeds the maximum limit of 2MB."]);
-                        return;
-                    }
+            if (empty($name) || empty($email)) {
+                return $this->redirect("/user/{$id}", 'error', 'Name and Email cannot be empty');
+            }
         
-                    $uploadDir = __DIR__ . '/../../htdocs/uploads/';
-                    if (!file_exists($uploadDir)) {
-                        mkdir($uploadDir, 0777, true);
-                    }
+            // Ambil data user lama untuk mempertahankan foto lama jika tidak di-update
+            $userData = $this->homeModel->getUserDetail($id);
+            if (!$userData) {
+                return $this->redirect("/user/{$id}", 'error', 'User not found');
+            }
         
-                    // Path file gambar yang akan disimpan
-                    $fileName = uniqid() . '.webp';
-                    $filePath = $uploadDir . $fileName;
+            $fileName = $userData['profile_picture']; // Default pakai foto lama
         
-                    // Pindahkan file sementara
-                    move_uploaded_file($profilePicture['tmp_name'], $filePath);
-        
-                    // Konversi dan kompres gambar ke WebP
-                    try {
-                        $image = imagecreatefromstring(file_get_contents($filePath));
-                        if ($image !== false) {
-                            imagewebp($image, $filePath, 70); // 70 adalah kualitas WebP
-                            imagedestroy($image);
-                        } else {
-                            throw new Exception("Failed to process the image.");
-                        }
-                    } catch (Exception $e) {
-                        View::render('interface.user', ['error' => "Image conversion failed: " . $e->getMessage()]);
-                        return;
-                    }
-        
-                    // Optimasi file menggunakan Spatie
-                    $optimizerChain = OptimizerChainFactory::create();
-                    $optimizerChain->optimize($filePath);
-        
-                    // Simpan data ke database
-                    try {
-                        $db = Database::getInstance();
-                        $query = "INSERT INTO users (name, email, profile_picture) VALUES (:name, :email, :profile_picture)";
-                        $db->query($query);
-                        $db->bind(':name', $name);
-                        $db->bind(':email', $email);
-                        $db->bind(':profile_picture', $fileName);
-                        $db->execute();
-        
-                        header('Location: ' . Config::get('BASE_URL') . '/user');
-                        exit;
-                    } catch (Exception $e) {
-                        View::render('interface.user', ['error' => "Failed to save user data: " . $e->getMessage()]);
-                        return;
-                    }
-                } else {
-                    View::render('interface.user', ['error' => "Failed to upload profile picture"]);
+            // Jika user ingin menghapus foto, set profile_picture ke NULL dan hapus file lama
+            if ($deleteProfilePicture && $fileName) {
+                $uploadDir = __DIR__ . '/../../htdocs/uploads/';
+                $filePath = $uploadDir . $fileName;
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Hapus file dari server
                 }
-            } else {
-                View::render('interface.user');
+                $fileName = null; // Set profile_picture menjadi NULL di database
+            }
+        
+            // Jika user mengunggah foto baru, ganti dengan yang baru
+            if ($profilePicture && $profilePicture['error'] === UPLOAD_ERR_OK) {
+                $fileName = $this->processImage($profilePicture, $id);
+                if ($fileName instanceof Exception) {
+                    return $this->redirect("/user/{$id}", 'error', $fileName->getMessage());
+                }
+            }
+        
+            try {
+                $db = Database::getInstance();
+                $db->query("UPDATE users SET name = :name, email = :email, profile_picture = :profile_picture WHERE id = :id");
+                
+                $db->bind(':name', $name);
+                $db->bind(':email', $email);
+                $db->bind(':profile_picture', $fileName); // Bisa null jika dihapus
+                $db->bind(':id', $id);
+                
+                $db->execute();
+                CacheManager::forget(['all_users', "user_detail:{$id}"]);
+                $this->redirect('/user', 'success', 'User updated successfully');
+            } catch (Exception $e) {
+                $this->redirect("/user/{$id}", 'error', "Failed to update user data: " . $e->getMessage());
+            }
+        }
+                
+
+        private function checkDatabaseConnection() {
+            try {
+                Database::getInstance();
+                return "success";
+            } catch (Exception $e) {
+                return $e->getMessage();
             }
         }
 
-        public function updateUser(string $id) {
-            Config::loadEnv();
+        private function processImage($file, $userId = null) {
+            if ($file['error'] !== UPLOAD_ERR_OK) return new Exception("Failed to upload profile picture");
         
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $name = $_POST['name'] ?? '';
-                $email = $_POST['email'] ?? '';
-                $profilePicture = $_FILES['profile_picture'] ?? null;
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowedExtensions)) return new Exception("Invalid file type");
         
-                if (empty($name) || empty($email)) {
-                    header('Location: ' . Config::get('BASE_URL') . "/user/{$id}?status=error&message=Name and Email cannot be empty");
-                    exit;
-                }
+            $maxFileSize = 2 * 1024 * 1024;
+            if ($file['size'] > $maxFileSize) return new Exception("File size exceeds 2MB limit");
         
-                try {
-                    $homeModel = new HomeModel();
-                    $oldUser = $homeModel->getUserDetail($id);
-                    $oldProfilePicture = $oldUser['profile_picture'] ?? null;
-        
-                    $newProfilePicture = null;
-                    if ($profilePicture && $profilePicture['error'] === UPLOAD_ERR_OK) {
-                        $allowedExtensions = ['jpg', 'jpeg', 'png'];
-                        $fileExtension = pathinfo($profilePicture['name'], PATHINFO_EXTENSION);
-        
-                        if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
-                            header('Location: ' . Config::get('BASE_URL') . "/user/{$id}?status=error&message=Invalid file type");
-                            exit;
-                        }
-        
-                        $uploadDir = __DIR__ . '/../../htdocs/uploads/';
-                        if (!file_exists($uploadDir)) {
-                            mkdir($uploadDir, 0777, true);
-                        }
-        
-                        $fileName = uniqid() . '.webp';
-                        $filePath = $uploadDir . $fileName;
-        
-                        move_uploaded_file($profilePicture['tmp_name'], $filePath);
-        
-                        // Konversi ke WebP dan optimasi
-                        $image = imagecreatefromstring(file_get_contents($filePath));
-                        if ($image !== false) {
-                            imagewebp($image, $filePath, 70);
-                            imagedestroy($image);
-                        }
-        
-                        $optimizerChain = OptimizerChainFactory::create();
-                        $optimizerChain->optimize($filePath);
-        
-                        $newProfilePicture = $fileName;
-        
-                        if ($oldProfilePicture && file_exists($uploadDir . $oldProfilePicture)) {
-                            unlink($uploadDir . $oldProfilePicture);
-                        }
-                    }
-        
-                    $homeModel->updateUserData($id, $name, $email, $newProfilePicture);
-        
-                    CacheManager::forget('all_users');
-                    CacheManager::forget("user_detail:{$id}");
-        
-                    header('Location: ' . Config::get('BASE_URL') . "/user?status=success&message=User updated successfully");
-                    exit;
-                } catch (Exception $e) {
-                    header('Location: ' . Config::get('BASE_URL') . "/user/{$id}?status=error&message=" . urlencode($e->getMessage()));
-                    exit;
-                }
-            } else {
-                header('Location: ' . Config::get('BASE_URL') . "/user/{$id}");
-                exit;
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+
+            $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!in_array($mime, $allowedMimeTypes)) {
+                return new Exception("Invalid file type.");
             }
-        }    
+
+        
+            $uploadDir = dirname(__DIR__, 2) . '/private-uploads/';
+            if (!file_exists($uploadDir)) mkdir($uploadDir, 0777, true);
+        
+            $fileName = uniqid() . '.webp';
+            $filePath = $uploadDir . $fileName;
+            move_uploaded_file($file['tmp_name'], $filePath);
+        
+            $image = imagecreatefromstring(file_get_contents($filePath));
+            if (!$image) return new Exception("Failed to process the image");
+        
+            imagewebp($image, $filePath, 70);
+            imagedestroy($image);
+        
+            OptimizerChainFactory::create()->optimize($filePath);
+        
+            if ($userId) {
+                $oldProfilePicture = $this->homeModel->getUserDetail($userId)['profile_picture'] ?? null;
+                if ($oldProfilePicture && file_exists($uploadDir . $oldProfilePicture)) unlink($uploadDir . $oldProfilePicture);
+            }
+        
+            return $fileName;
+        }        
+
+        private function redirectToNotFound() {
+            header("Location: " . Config::get('BASE_URL') . "/404");
+            exit();
+        }
+
+        private function redirect($url, $status = null, $message = null) {
+            $query = $status ? "?status={$status}&message=" . urlencode($message) : '';
+            header("Location: " . Config::get('BASE_URL') . "{$url}{$query}");
+            exit();
+        }
     }
 ?>

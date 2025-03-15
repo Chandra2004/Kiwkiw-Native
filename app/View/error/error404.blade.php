@@ -26,7 +26,7 @@
             </p>
 
             <!-- Home Button -->
-            <a href="{{ $base_url }}/" 
+            <a href="{{ url('/') }}" 
                class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-lg font-medium 
                       hover:from-cyan-600 hover:to-blue-700 transition-all shadow-2xl hover:shadow-cyan-500/20">
                 Return to Home
@@ -36,7 +36,7 @@
         <!-- Footer Note -->
         <p class="mt-8 text-gray-500 text-sm">
             Still lost? Check our 
-            <a href="{{ $base_url }}/docs" class="text-cyan-400 hover:underline">documentation</a>
+            <a href="{{ url('/') }}" class="text-cyan-400 hover:underline">documentation</a>
         </p>
     </div>
 </body>

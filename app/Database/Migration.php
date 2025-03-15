@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMESPACE}}\Database;
+    namespace User\KiwkiwNative\Database;
 
-    use {{NAMESPACE}}\App\Database;
+    use User\KiwkiwNative\App\Database;
 
     abstract class Migration {
         protected Database $db;
@@ -12,7 +12,6 @@
         }
 
         abstract public function up();
-
         abstract public function down();
     }
 ?>

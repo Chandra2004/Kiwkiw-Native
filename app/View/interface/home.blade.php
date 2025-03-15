@@ -123,8 +123,7 @@
                 
                 <!-- CTA Button -->
                 <div class="flex justify-center space-x-4 mb-16">
-                    <a href="https://github.com/Chandra2004/Kiwkiw-Native.git" 
-                       target="_blank"
+                    <a href="{{ url('user') }}"
                        rel="noopener noreferrer"
                        class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-lg font-medium 
                               hover:from-cyan-600 hover:to-blue-700 transition-all shadow-2xl hover:shadow-cyan-500/20

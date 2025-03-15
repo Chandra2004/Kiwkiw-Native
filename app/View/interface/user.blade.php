@@ -76,7 +76,6 @@
             </div>
         </div>
     </nav>
-
     <!-- Main Content -->
     <main class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="flex justify-between items-center mb-12">
@@ -94,7 +93,7 @@
         </div>
 
         <div class="mb-8">
-            <a href="{{ $base_url }}/" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
+            <a href="{{ url('/') }}" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -145,7 +144,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @if (!empty($userData))
                 @foreach ($userData as $userItem)
-                    <a href="{{ $base_url }}/user/information/{{ $userItem['id'] }}"
+                    <a href="{{ url('user/information/' . $userItem['id']) }}"
                         class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-cyan-400/30 transition-all group transform hover:-translate-y-1">
                         <div class="flex items-center justify-between">
                             <div>
@@ -208,10 +207,11 @@
                 </button>
 
                 <div class="py-6 px-6 lg:px-8">
-                    <form class="space-y-6" action="{{ $base_url }}/user" method="POST"
+                    <form class="space-y-6" action="{{ url('user') }}" method="POST"
                         enctype="multipart/form-data">
                         <!-- Name Input -->
                         <div class="relative group">
+                            @csrf
                             <div
                                 class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-cyan-400">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +255,7 @@
                                     <p class="text-xs text-gray-500 mt-1">PNG, JPG (MAX. 2MB)</p>
                                 </div>
                                 <input type="file" name="profile_picture" id="profile_picture" class="hidden"
-                                    accept="image/*" required>
+                                    accept="image/*">
                             </label>
                             <!-- Image Preview -->
                             <div id="imagePreview" class="mt-4 hidden">
@@ -297,7 +297,7 @@
     </footer>
 
     <!-- Modal Script -->
-    <script>
+    <script nonce="<?= $nonce ?>">
         const openModalButton = document.getElementById('openModalButton');
         const closeModalButton = document.getElementById('closeModalButton');
         const addUserModal = document.getElementById('addUserModal');

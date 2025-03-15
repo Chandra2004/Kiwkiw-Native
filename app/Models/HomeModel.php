@@ -1,9 +1,9 @@
 <?php
-    namespace {{NAMESPACE}}\Models;
+    namespace User\KiwkiwNative\Models;
 
-    use {{NAMESPACE}}\App\CacheManager;
-    use {{NAMESPACE}}\App\Database;
-    use {{NAMESPACE}}\App\Config;
+    use User\KiwkiwNative\App\CacheManager;
+    use User\KiwkiwNative\App\Database;
+    use User\KiwkiwNative\App\Config;
 
     class HomeModel {
         private $db;
@@ -16,7 +16,7 @@
         public function getUserData() {
             return CacheManager::remember(
                 'all_users', 
-                120, 
+                60, 
                 function() {
                     $this->db->query("SELECT * FROM users");
                     $data['users'] = $this->db->resultSet();
@@ -27,9 +27,7 @@
 
         public function getUserDetail($id) {
             return CacheManager::remember(
-                "user_detail:{$id}", // Unique key berdasarkan ID user
-                120, // TTL 5 menit (sama dengan getUserData)
-                function() use ($id) { // Gunakan use ($id) untuk akses parameter
+                "user_detail:{$id}", 60, function() use ($id) { 
                     $this->db->query("SELECT * FROM users WHERE id = :id");
                     $this->db->bind('id', $id);
                     $data = $this->db->single();

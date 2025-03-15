@@ -1,9 +1,9 @@
 <?php
-    namespace {{NAMESPACE}}\App;
+    namespace User\KiwkiwNative\App;
 
     use Closure;
-    use {{NAMESPACE}}\App\Database;
-    use {{NAMESPACE}}\App\Blueprint;
+    use User\KiwkiwNative\App\Database;
+    use User\KiwkiwNative\App\Blueprint;
 
     class Schema {
         public static function create($table, Closure $callback) {

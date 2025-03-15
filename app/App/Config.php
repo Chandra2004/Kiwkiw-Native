@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMESPACE}}\app;
+    namespace User\KiwkiwNative\app;
 
     use Dotenv\Dotenv;
     use Predis\Client;
@@ -13,10 +13,9 @@
         }
 
         public static function get($key) {
-            return $_ENV[$key] ?? null; // Mengembalikan nilai dari .env atau null jika tidak ada
+            return $_ENV[$key] ?? null;
         }
 
-        // Inisialisasi Redis
         public static function redis() {
             if (!self::$redis) {
                 self::$redis = new Client([

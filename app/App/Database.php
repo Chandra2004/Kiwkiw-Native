@@ -1,16 +1,15 @@
 <?php
-    namespace {{NAMESPACE}}\App;
+    namespace User\KiwkiwNative\App;
 
     use PDO;
     use PDOException;
-    use {{NAMESPACE}}\App\Config;
+    use User\KiwkiwNative\App\Config;
 
     class Database {
         private static $instance = null;
         private $dbh;
         private $stmt;
 
-        // Private constructor untuk mencegah instantiasi langsung
         private function __construct() {
             $this->connect();
         }
@@ -30,7 +29,6 @@
             $user = Config::get('DB_USER');
             $pass = Config::get('DB_PASS');
 
-            // Validasi environment variables
             if (empty($host) || empty($dbname) || empty($user)) {
                 throw new PDOException("Database configuration is incomplete");
             }
@@ -45,10 +43,6 @@
                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
                     PDO::ATTR_EMULATE_PREPARES => false
                 ]);
-                
-                // Optional: Timezone configuration
-                // $this->dbh->exec("SET time_zone = '" . Config::get('DB_TIMEZONE', '+00:00') . "'");
-
             } catch (PDOException $e) {
                 error_log("Database Connection Error: " . $e->getMessage());
                 throw new PDOException("Database connection failed. Check error logs for details.");

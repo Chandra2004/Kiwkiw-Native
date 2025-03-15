@@ -92,7 +92,7 @@
 
                 <!-- CTA Buttons -->
                 <div class="flex justify-center gap-4">
-                    <a href="{{ $base_url }}/" 
+                    <a href="{{ url('/') }}" 
                        class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium 
                               hover:from-cyan-600 hover:to-blue-700 transition-all flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

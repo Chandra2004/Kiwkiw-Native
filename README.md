@@ -120,6 +120,7 @@ Kiwkiw-Native/
 │   │   └── Migration.php
 │   ├── Middleware/
 │   │   ├── Middleware.php
+│   │   ├── CsrfMiddleware.php
 │   │   └── AuthMiddleware.php
 │   ├── Models/
 │   │   ├── Seeders/
@@ -138,15 +139,16 @@ Kiwkiw-Native/
 │   │       ├── home.blade.php
 │   │       └── user.blade.php
 │   └── BladeInit.php
+│   └── helpers.php
 ├── database/
 │   ├── migrations/
 │   │   └── CreateUsersTable.php
 │   └── seeders/
 │       └── UserSeeder.php
 ├── htdocs/
-│   ├── uploads/
 │   ├── .htaccess
 │   └── index.php
+├── private-uploads/
 ├── vendor/
 ├── .env
 ├── gitignore

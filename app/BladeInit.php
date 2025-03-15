@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMESPACE}};
+    namespace User\KiwkiwNative;
 
     use Illuminate\View\Factory;
     use Illuminate\Events\Dispatcher;
@@ -20,6 +20,10 @@
 
                 $resolver->register('blade', function () use ($filesystem) {
                     $compiler = new BladeCompiler($filesystem, __DIR__ . '/Storage/cache/views');
+                    // Daftarkan directive @csrf
+                    $compiler->directive('csrf', function () {
+                        return "<?php echo '<input type=\"hidden\" name=\"_token\" value=\"' . \$_SESSION['csrf_token'] . '\">'; ?>";
+                    });                    
                     return new CompilerEngine($compiler, $filesystem);
                 });
 
@@ -36,7 +40,6 @@
                     new Dispatcher()
                 );
             }
-
             return self::$blade;
         }
 

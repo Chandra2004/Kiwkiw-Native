@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMESPACE}}\App;
+    namespace User\KiwkiwNative\App;
 
-    use {{NAMESPACE}}\App\Config;
+    use User\KiwkiwNative\App\Config;
     use Exception;
 
     class CacheManager {
@@ -26,7 +26,6 @@
                 $redis->setex($key, $ttl, json_encode($data));
                 return $data;
             } catch (Exception $e) {
-                // Fallback ke database jika Redis down
                 return $callback();
             }
         }
@@ -40,9 +39,8 @@
         public static function forget($key) {
             try {
                 $redis = Config::redis();
-                return $redis->del($key) > 0; // Mengembalikan true jika ada data yang dihapus
+                return $redis->del($key) > 0;
             } catch (Exception $e) {
-                // Jika Redis down, abaikan kesalahan dan kembalikan false
                 return false;
             }
         }

@@ -56,7 +56,7 @@
     <main class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="max-w-3xl mx-auto">
             <div class="mb-8 flex items-center justify-between">
-                <a href="{{ $base_url }}/user" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
+                <a href="{{ url('user') }}" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -82,11 +82,11 @@
                     </span>
                 </div>
 
-                <form action="{{ $base_url }}/user/{{ $user['id'] }}/update" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="{{ url('user/' . $user['id'] . '/update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     <h3 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-6">
                         Edit User
                     </h3>
-                
+                    @csrf
                     <!-- Name Input -->
                     <div class="relative group">
                         <label for="name" class="block text-sm font-medium text-gray-400 mb-2">Name</label>
@@ -139,6 +139,12 @@
                             <img id="previewImage" class="w-32 h-32 object-cover rounded-lg border border-cyan-400/50" src="#" alt="Image Preview">
                         </div>
                     </div>
+
+                    <!-- Delete Profile Picture Checkbox -->
+                    <div class="flex items-center mt-4">
+                        <input type="checkbox" name="delete_profile_picture" id="delete_profile_picture" class="w-5 h-5 text-cyan-500 bg-gray-700 border-gray-600 rounded focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                        <label for="delete_profile_picture" class="ml-2 text-gray-400 text-sm">Delete profile picture</label>
+                    </div>
                 
                     <!-- Submit Button -->
                     <button type="submit" class="w-full py-3.5 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30">
@@ -175,7 +181,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Aksi</p>
-                            <a href="{{ $base_url }}/user/{{ $user['id'] }}/delete" onclick="return confirm('Are you sure you want to delete this user?');" class="text-sm font-medium text-red-800 group-hover:text-cyan-400 transition-colors">hapus {{ $user['name'] }}</a>
+                            <a href="{{ url('user/' . $user['id'] . '/delete') }}" onclick="return confirm('Are you sure you want to delete this user?');" class="text-sm font-medium text-red-800 group-hover:text-cyan-400 transition-colors">hapus {{ $user['name'] }}</a>
                         </div>
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Username</p>
@@ -199,7 +205,7 @@
                         </div>
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Profile Picture</p>
-                            <img src="{{ $base_url }}/uploads/{{ $user['profile_picture'] }}" alt="{{ $user['name'] }}" loading="lazy">
+                            <img src="{{ $user['profile_picture'] ? url('file.php?file=' . $user['profile_picture']) : url('file.php?file=dummy/dummy.jpg') }}" alt="{{ $user['name'] }}" loading="lazy">
                         </div>
                     </div>
 
@@ -244,7 +250,8 @@
                 </button>
 
                 <div class="py-6 px-6 lg:px-8">
-                    <form class="space-y-6" action="{{ $base_url }}/user/create-user" method="POST" enctype="multipart/form-data">
+                    <form class="space-y-6" action="{{ url('user') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <!-- Name Input -->
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-cyan-400">

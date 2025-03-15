@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMESPACE}}\Middleware;
+    namespace User\KiwkiwNative\Middleware;
 
     interface Middleware {
         function before();

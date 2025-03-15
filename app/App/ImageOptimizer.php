@@ -1,5 +1,5 @@
 <?php
-    namespace {{NAMESPACE}}\App;
+    namespace User\KiwkiwNative\App;
 
     use Spatie\ImageOptimizer\OptimizerChainFactory;
 

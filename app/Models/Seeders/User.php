@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMESPACE}}\Models\Seeders;
+    namespace User\KiwkiwNative\Models\Seeders;
 
-    use {{NAMESPACE}}\App\Database;
+    use User\KiwkiwNative\App\Database;
 
     class User {
         protected static Database $db;
