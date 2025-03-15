@@ -227,6 +227,13 @@ Menambahkan sedikit pembaharuan :
 2. daerah migration & seeder lebih dipermudah karena adanya schema dan blueprint.
 3. daerah artisan agar CLI lebih interaktif.
 
+
+(15 maret 2025)
+1. CSRF
+2. mengganti direktori htdocs/upload menjadi ../private-uploads
+3. menambahkan keamanan agar tidak mudah diserang
+4. sanitasi file
+
 ---
 
 ## ✨ Kontribusi
