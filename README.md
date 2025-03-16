@@ -69,7 +69,7 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
     },
     "scripts": {
       "post-autoload-dump": [
-          "{{NAMESPACE}}\\App\\Router::cacheRoutes"
+          "{{lala}}\\App\\Router::cacheRoutes"
       ],
       "post-install-cmd": [
           "php update-namespace.php"
@@ -163,6 +163,66 @@ Kiwkiw-Native/
 
 ---
 
+## 🔥 INFORMASI JIKA ANDA MENGGUNAKAN IDX GOOGLE (dev.nix)
+```nix
+
+{ pkgs, ... }: {
+  channel = "stable-24.05";
+
+  packages = [
+    pkgs.php
+    pkgs.php81Packages.composer
+    pkgs.nodejs_20
+    pkgs.python3
+    pkgs.tailwindcss
+  ];
+
+  
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+
+  env = {
+    PHP_PATH = "/usr/bin/php";
+  };
+
+  idx = {
+    extensions = [
+      "rangav.vscode-thunder-client"
+      "amirmarmul.laravel-blade-vscode"
+      "bradlc.vscode-tailwindcss"
+      "cweijan.dbclient-jdbc"
+      "cweijan.vscode-database-client2"
+      "formulahendry.vscode-mysql"
+      "imgildev.vscode-tailwindcss-snippets"
+      "onecentlin.laravel-blade"
+      "shufo.vscode-blade-formatter"
+      "yandeu.five-server"
+    ];
+    previews = {
+      enable = true;
+      previews = {
+        web = {
+          command = ["python3" "-m" "http.server" "$PORT" "--bind" "0.0.0.0"];
+          manager = "web";
+        };
+      };
+    };
+    workspace = {
+      onCreate = {
+        default.openFiles = ["index.php"];
+      };
+      onStart = {
+        run-server = "php -S localhost:3000 -t htdocs";
+      };
+    };
+  };
+}
+
+
+```
 ## 🔥 Cara Menggunakan Migration dan Seeder
 
 ### 🔹 **Migration** (Migrasi Database)
@@ -227,8 +287,8 @@ Menambahkan sedikit pembaharuan :
 2. daerah migration & seeder lebih dipermudah karena adanya schema dan blueprint.
 3. daerah artisan agar CLI lebih interaktif.
 
-
 (15 maret 2025)
+
 1. CSRF
 2. mengganti direktori htdocs/upload menjadi ../private-uploads
 3. menambahkan keamanan agar tidak mudah diserang
