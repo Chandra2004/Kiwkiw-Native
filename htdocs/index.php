@@ -16,11 +16,11 @@
     require_once __DIR__ . '/../app/helpers.php';
     require_once __DIR__ . '/../vendor/autoload.php';
 
-    use User\KiwkiwNative\BladeInit;
-    use User\KiwkiwNative\App\Config;
-    use User\KiwkiwNative\App\Router;
-    use User\KiwkiwNative\Middleware\CsrfMiddleware;
-    use User\KiwkiwNative\Controller\HomeController;
+    use {{NAMESPACE}}\BladeInit;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\App\Router;
+    use {{NAMESPACE}}\Middleware\CsrfMiddleware;
+    use {{NAMESPACE}}\Controller\HomeController;
 
     // Load konfigurasi .env
     Config::loadEnv();

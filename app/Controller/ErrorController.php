@@ -1,8 +1,8 @@
 <?php
-    namespace User\KiwkiwNative\Controller;
+    namespace {{NAMESPACE}}\Controller;
 
-    use User\KiwkiwNative\App\Config;
-    use User\KiwkiwNative\App\View;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\App\View;
 
     class ErrorController
     {

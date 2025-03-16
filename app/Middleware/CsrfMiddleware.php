@@ -1,5 +1,5 @@
 <?php
-    namespace User\KiwkiwNative\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
 
     class CsrfMiddleware implements Middleware {
         public static function generateToken() {

@@ -221,8 +221,15 @@ Kiwkiw-Native/
   };
 }
 
+```
+
+```sh
+
+mysql
+SELECT @hostname;
 
 ```
+
 ## 🔥 Cara Menggunakan Migration dan Seeder
 
 ### 🔹 **Migration** (Migrasi Database)

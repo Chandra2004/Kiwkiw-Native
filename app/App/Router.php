@@ -1,8 +1,8 @@
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
-    use User\KiwkiwNative\App\Config;
-    use User\KiwkiwNative\Controller\ErrorController;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\Controller\ErrorController;
     use Exception;
 
     class Router {

@@ -1,9 +1,9 @@
 <?php
-    namespace User\KiwkiwNative\Controller;
+    namespace {{NAMESPACE}}\Controller;
 
     use Spatie\ImageOptimizer\OptimizerChainFactory;
-    use User\KiwkiwNative\App\{Config, Database, View, CacheManager};
-    use User\KiwkiwNative\Models\HomeModel;
+    use {{NAMESPACE}}\App\{Config, Database, View, CacheManager};
+    use {{NAMESPACE}}\Models\HomeModel;
     use Exception;
 
     class HomeController {

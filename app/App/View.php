@@ -1,7 +1,7 @@
 <?php
-    namespace User\KiwkiwNative\app;
+    namespace {{NAMESPACE}}\app;
 
-    use User\KiwkiwNative\BladeInit;
+    use {{NAMESPACE}}\BladeInit;
     
     class View {
         public static function render($view, $data = []) {

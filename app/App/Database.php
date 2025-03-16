@@ -1,9 +1,9 @@
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
     use PDO;
     use PDOException;
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     class Database {
         private static $instance = null;

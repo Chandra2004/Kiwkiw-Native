@@ -1,7 +1,7 @@
 <?php
     namespace Database\Seeders;
 
-    use User\KiwkiwNative\Models\Seeders\User;
+    use {{NAMESPACE}}\Models\Seeders\User;
 
     use Faker\Factory;
 

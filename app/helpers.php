@@ -1,5 +1,5 @@
 <?php
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     if (!function_exists('url')) {
         function url($path = '') {

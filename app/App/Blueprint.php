@@ -1,5 +1,5 @@
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
     class Blueprint {
         private $table;

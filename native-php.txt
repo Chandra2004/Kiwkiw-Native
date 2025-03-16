@@ -64,7 +64,7 @@ Kiwkiw-Native/
 
 app/App/Blueprint.php :
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
     class Blueprint {
         private $table;
@@ -138,9 +138,9 @@ app/App/Blueprint.php :
 
 app/App/CacheManager.php :
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
     use Exception;
 
     class CacheManager {
@@ -188,7 +188,7 @@ app/App/CacheManager.php :
 
 app/App/Config.php :
 <?php
-    namespace User\KiwkiwNative\app;
+    namespace {{NAMESPACE}}\app;
 
     use Dotenv\Dotenv;
     use Predis\Client;
@@ -220,11 +220,11 @@ app/App/Config.php :
 
 app/App/Database.php :
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
     use PDO;
     use PDOException;
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     class Database {
         private static $instance = null;
@@ -367,7 +367,7 @@ app/App/Database.php :
 
 app/App/ImageOptimizer.php :
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
     use Spatie\ImageOptimizer\OptimizerChainFactory;
 
@@ -389,10 +389,10 @@ app/App/ImageOptimizer.php :
 
 app/App/Router.php :
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
-    use User\KiwkiwNative\App\Config;
-    use User\KiwkiwNative\Controller\ErrorController;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\Controller\ErrorController;
     use Exception;
 
     class Router {
@@ -531,11 +531,11 @@ app/App/Router.php :
 
 app/App/Schema.php :
 <?php
-    namespace User\KiwkiwNative\App;
+    namespace {{NAMESPACE}}\App;
 
     use Closure;
-    use User\KiwkiwNative\App\Database;
-    use User\KiwkiwNative\App\Blueprint;
+    use {{NAMESPACE}}\App\Database;
+    use {{NAMESPACE}}\App\Blueprint;
 
     class Schema {
         public static function create($table, Closure $callback) {
@@ -567,9 +567,9 @@ app/App/Schema.php :
 
 app/App/View.php :
 <?php
-    namespace User\KiwkiwNative\app;
+    namespace {{NAMESPACE}}\app;
 
-    use User\KiwkiwNative\BladeInit;
+    use {{NAMESPACE}}\BladeInit;
     
     class View {
         public static function render($view, $data = []) {
@@ -580,10 +580,10 @@ app/App/View.php :
 
 app/Controller/ErrorController.php :
 <?php
-    namespace User\KiwkiwNative\Controller;
+    namespace {{NAMESPACE}}\Controller;
 
-    use User\KiwkiwNative\App\Config;
-    use User\KiwkiwNative\App\View;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\App\View;
 
     class ErrorController
     {
@@ -603,11 +603,11 @@ app/Controller/ErrorController.php :
 
 app/Controller/HomeController.php :
 <?php
-    namespace User\KiwkiwNative\Controller;
+    namespace {{NAMESPACE}}\Controller;
 
     use Spatie\ImageOptimizer\OptimizerChainFactory;
-    use User\KiwkiwNative\App\{Config, Database, View, CacheManager};
-    use User\KiwkiwNative\Models\HomeModel;
+    use {{NAMESPACE}}\App\{Config, Database, View, CacheManager};
+    use {{NAMESPACE}}\Models\HomeModel;
     use Exception;
 
     class HomeController {
@@ -805,9 +805,9 @@ app/Controller/HomeController.php :
 
 app/Database/Migration.php :
 <?php
-    namespace User\KiwkiwNative\Database;
+    namespace {{NAMESPACE}}\Database;
 
-    use User\KiwkiwNative\App\Database;
+    use {{NAMESPACE}}\App\Database;
 
     abstract class Migration {
         protected Database $db;
@@ -824,9 +824,9 @@ app/Database/Migration.php :
 
 app/Middleware/AuthMiddleware.php :
 <?php
-    namespace User\KiwkiwNative\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
 
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     class AuthMiddleware implements Middleware {
         function before()
@@ -845,7 +845,7 @@ app/Middleware/AuthMiddleware.php :
 
 app/Middleware/Middleware.php :
 <?php
-    namespace User\KiwkiwNative\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
 
     interface Middleware {
         function before();
@@ -854,7 +854,7 @@ app/Middleware/Middleware.php :
 
 app/Middleware/CsrfMiddleware.php :
 <?php
-    namespace User\KiwkiwNative\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
 
     class CsrfMiddleware implements Middleware {
         public static function generateToken() {
@@ -900,9 +900,9 @@ app/Middleware/CsrfMiddleware.php :
 
 app/Models/Seeders/User.php :
 <?php
-    namespace User\KiwkiwNative\Models\Seeders;
+    namespace {{NAMESPACE}}\Models\Seeders;
 
-    use User\KiwkiwNative\App\Database;
+    use {{NAMESPACE}}\App\Database;
 
     class User {
         protected static Database $db;
@@ -926,11 +926,11 @@ app/Models/Seeders/User.php :
 
 app/Models/HomeModel.php :
 <?php
-    namespace User\KiwkiwNative\Models;
+    namespace {{NAMESPACE}}\Models;
 
-    use User\KiwkiwNative\App\CacheManager;
-    use User\KiwkiwNative\App\Database;
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\CacheManager;
+    use {{NAMESPACE}}\App\Database;
+    use {{NAMESPACE}}\App\Config;
 
     class HomeModel {
         private $db;
@@ -1001,7 +1001,7 @@ file view difile UI.txt
 
 app/BladeInit.php :
 <?php
-    namespace User\KiwkiwNative;
+    namespace {{NAMESPACE}};
 
     use Illuminate\View\Factory;
     use Illuminate\Events\Dispatcher;
@@ -1053,7 +1053,7 @@ app/BladeInit.php :
 
 app/helpers.php :
 <?php
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     if (!function_exists('url')) {
         function url($path = '') {
@@ -1066,7 +1066,7 @@ database/migrations/CreateUserTable.php :
 <?php
     namespace Database\Migrations;
 
-    use User\KiwkiwNative\App\Schema;
+    use {{NAMESPACE}}\App\Schema;
 
     class CreateUsersTable {
         public function up() {
@@ -1092,7 +1092,7 @@ database/seeders/UserSeeder.php :
 <?php
     namespace Database\Seeders;
 
-    use User\KiwkiwNative\Models\Seeders\User;
+    use {{NAMESPACE}}\Models\Seeders\User;
 
     use Faker\Factory;
 
@@ -1357,11 +1357,11 @@ htdocs/index.php :
     require_once __DIR__ . '/../app/helpers.php';
     require_once __DIR__ . '/../vendor/autoload.php';
 
-    use User\KiwkiwNative\BladeInit;
-    use User\KiwkiwNative\App\Config;
-    use User\KiwkiwNative\App\Router;
-    use User\KiwkiwNative\Middleware\CsrfMiddleware;
-    use User\KiwkiwNative\Controller\HomeController;
+    use {{NAMESPACE}}\BladeInit;
+    use {{NAMESPACE}}\App\Config;
+    use {{NAMESPACE}}\App\Router;
+    use {{NAMESPACE}}\Middleware\CsrfMiddleware;
+    use {{NAMESPACE}}\Controller\HomeController;
 
     // Load konfigurasi .env
     Config::loadEnv();

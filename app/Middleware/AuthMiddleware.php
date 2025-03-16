@@ -1,7 +1,7 @@
 <?php
-    namespace User\KiwkiwNative\Middleware;
+    namespace {{NAMESPACE}}\Middleware;
 
-    use User\KiwkiwNative\App\Config;
+    use {{NAMESPACE}}\App\Config;
 
     class AuthMiddleware implements Middleware {
         function before()

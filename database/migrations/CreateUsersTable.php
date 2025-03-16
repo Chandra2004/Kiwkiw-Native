@@ -1,7 +1,7 @@
 <?php
     namespace Database\Migrations;
 
-    use User\KiwkiwNative\App\Schema;
+    use {{NAMESPACE}}\App\Schema;
 
     class CreateUsersTable {
         public function up() {

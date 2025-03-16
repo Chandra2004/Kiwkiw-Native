@@ -1,5 +1,5 @@
 <?php
-    namespace User\KiwkiwNative;
+    namespace {{NAMESPACE}};
 
     use Illuminate\View\Factory;
     use Illuminate\Events\Dispatcher;
