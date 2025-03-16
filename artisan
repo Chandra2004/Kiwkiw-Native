@@ -78,6 +78,11 @@
         }
     }
 
+    function handleServe() {
+        output('info', "Starting development server at http://localhost:8080...");
+        shell_exec("php -S localhost:8080 -t htdocs");
+    }
+
     function parseOptions($options) {
         foreach ($options as $option) {
             if (strpos($option, '--class=') === 0) {
@@ -118,6 +123,10 @@
             handleMigration(null, 'up');
             handleSeeder();
             break;
+        
+        case 'serve':
+            handleServe();
+            break;
 
         default:
             output('error', "Command not recognized. 
@@ -126,7 +135,8 @@
     - rollback [--class=ClassName]
     - seed [--class=ClassName]
     - migrate:refresh
-    - migrate:fresh");
+    - migrate:fresh
+    - serve");
             break;
     }
 ?>

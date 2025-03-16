@@ -62,14 +62,15 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
         }
     },
     "files": [
-        "app/App/Config.php"
+        "app/App/Config.php",
+        "app/Helpers/helpers.php"
     ],
     "require": {
         "php": ">=8"
     },
     "scripts": {
       "post-autoload-dump": [
-          "{{lala}}\\App\\Router::cacheRoutes"
+          "{{NAMESPACE}}\\App\\Router::cacheRoutes"
       ],
       "post-install-cmd": [
           "php update-namespace.php"
@@ -92,10 +93,20 @@ Tambahkan pengaturan berikut ke dalam file `composer.json`:
 Jalankan update namespace agar autoload berjalan:
 
 ```sh
-  php update-namespace.php
+  php update-namespace.blade.php
 ```
 
-Atau akses melalui browser: `http://localhost/kiwkiw-native/update-namespace.php`
+### 7 Setting .env :
+```env
+  BASE_URL=http://localhost:8080
+```
+
+### 8 Jalankan Server Kiwkiw :
+```sh
+  php artisan serve
+```
+
+akses melalui browser: `http://localhost:8080`
 
 ---
 
@@ -113,6 +124,9 @@ Kiwkiw-Native/
 │   │   ├── Router.php
 │   │   ├── Schema.php
 │   │   └── View.php
+│   ├── Helpers/
+│   │   ├── Helper.php
+│   │   ├── helpers.php
 │   ├── Controller/
 │   │   ├── ErrorController.php
 │   │   └── HomeController.php
@@ -139,7 +153,6 @@ Kiwkiw-Native/
 │   │       ├── home.blade.php
 │   │       └── user.blade.php
 │   └── BladeInit.php
-│   └── helpers.php
 ├── database/
 │   ├── migrations/
 │   │   └── CreateUsersTable.php
@@ -268,7 +281,7 @@ Buat file seeder baru di `database/seeders/` (contoh: `UserSeeder.php`).
 Tambahkan BASE\_URL di file `.env` sesuai dengan file path dari `public/`:
 
 ```env
-BASE_URL=http://localhost/Kiwkiw-Native/public
+BASE_URL=http://localhost:8080
 ```
 
 ---
@@ -300,6 +313,11 @@ Menambahkan sedikit pembaharuan :
 2. mengganti direktori htdocs/upload menjadi ../private-uploads
 3. menambahkan keamanan agar tidak mudah diserang
 4. sanitasi file
+
+(17 maret 2025)
+
+1. menambahkan running server `php artisan serve` di port 8080
+2. menambahkan helper
 
 ---
 

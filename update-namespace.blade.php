@@ -77,7 +77,7 @@
                         </div>
                         <?php endif; ?>
                         
-                        <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/kiwkiw-native/htdocs/" class="inline-block bg-gray-700/50 hover:bg-gray-700/70 text-gray-300 px-6 py-2 rounded-lg transition-colors">
+                        <a href="{{ url('/') }}" class="inline-block bg-gray-700/50 hover:bg-gray-700/70 text-gray-300 px-6 py-2 rounded-lg transition-colors">
                             Kembali ke Beranda
                         </a>
                     </div>

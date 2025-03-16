@@ -13,8 +13,8 @@
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'); // Paksa HTTPS
     // header('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src \'self\' \'unsafe-inline\' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; img-src \'self\' data:;'); // Batasi sumber konten eksternal
 
-    require_once __DIR__ . '/../app/helpers.php';
     require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../app/Helpers/helpers.php';
 
     use {{NAMESPACE}}\BladeInit;
     use {{NAMESPACE}}\App\Config;
