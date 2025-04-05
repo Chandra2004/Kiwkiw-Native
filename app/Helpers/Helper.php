@@ -1,7 +1,7 @@
 <?php
-    namespace {{NAMESPACE}}\Helpers;
+    namespace User\KiwkiwNative\Helpers;
 
-    use {{NAMESPACE}}\App\Config;
+    use User\KiwkiwNative\App\Config;
 
     class Helper {
         /**
@@ -19,11 +19,11 @@
             $query = [];
             if ($status) $query['status'] = $status;
             if ($message) $query['message'] = urlencode($message);
-
+        
             $queryString = !empty($query) ? '?' . http_build_query($query) : '';
-            header("Location: " . self::url($url) . $queryString);
+            header("Location: " . $url . $queryString);
             exit();
-        }
+        }        
 
         /**
          * 3️⃣ Mengambil data dari GET & POST (lebih aman)
@@ -138,6 +138,20 @@
                 }
             }
             return '0.0.0.0';
+        }
+
+        /**
+         * 1️⃣4️⃣ Generate UUID v4 (Universally Unique Identifier)
+         */
+        public static function generateUUID() {
+            return sprintf(
+                '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0x0fff) | 0x4000,
+                mt_rand(0, 0x3fff) | 0x8000,
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+            );
         }
     }
 ?>
