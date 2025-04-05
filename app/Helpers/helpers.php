@@ -1,5 +1,5 @@
 <?php
-    use {{NAMESPACE}}\Helpers\Helper;
+    use User\KiwkiwNative\Helpers\Helper;
 
     if (!function_exists('url')) {
         function url($path = '') {
@@ -30,4 +30,11 @@
             return Helper::get_flash($key);
         }
     }
+
+    if (!function_exists('generateUUID')) {
+        function generateUUID() {
+            return Helper::generateUUID();
+        }
+    }
+    
 ?>
