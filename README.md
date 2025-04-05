@@ -319,6 +319,10 @@ Menambahkan sedikit pembaharuan :
 1. menambahkan running server `php artisan serve` di port 8080
 2. menambahkan helper
 
+(05 april 2025)
+
+1. menambahkan generateUUID() function di helper
+
 ---
 
 ## ✨ Kontribusi
