@@ -325,6 +325,11 @@ Menambahkan sedikit pembaharuan :
 
 1. menambahkan generateUUID() function di helper
 
+(06 april 2025)
+
+1. menambahkan enviroment payment & maintenance
+
+
 ---
 
 ## ✨ Kontribusi
